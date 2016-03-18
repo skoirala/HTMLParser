@@ -68,6 +68,7 @@ extension AlbumSongsListTableViewAdapter: UITableViewDataSource {
 extension AlbumSongsListTableViewAdapter: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        playPauseItemAtIndexPath(indexPath)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }
@@ -103,20 +104,23 @@ extension AlbumSongsListTableViewAdapter {
     
     private func addPlayButtonEventHandlerToCell(cell: AlbumSongListTableViewCell, atIndexPath indexPath: NSIndexPath) {
         cell.onPlayButtonTapped = { [weak self] in
-            
-            if let playingIndexPath = self?.playingIndexPath where playingIndexPath == indexPath {
-                self?.togglePlayAtIndexPath(indexPath)
-                return
-            }
-            
-            if let playingIndexPath = self?.playingIndexPath  {
-                self?.resetPlayingAtIndexPath(playingIndexPath)
-            }
-            
-            self?.updatePlayingAtIndexPath(indexPath)
-            self?.playSampleAtIndexPath(indexPath)
-            self?.playingIndexPath = indexPath
+            self?.playPauseItemAtIndexPath(indexPath)
         }
+    }
+    
+    private func playPauseItemAtIndexPath(indexPath: NSIndexPath) {
+        if let playingIndexPath = playingIndexPath where playingIndexPath == indexPath {
+            togglePlayAtIndexPath(indexPath)
+            return
+        }
+        
+        if let playingIndexPath = playingIndexPath  {
+            resetPlayingAtIndexPath(playingIndexPath)
+        }
+        
+        updatePlayingAtIndexPath(indexPath)
+        playSampleAtIndexPath(indexPath)
+        playingIndexPath = indexPath
     }
     
     private func updateProgressForPlayingItem(progress: CGFloat) {
