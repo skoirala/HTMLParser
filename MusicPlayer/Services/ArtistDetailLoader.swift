@@ -1,6 +1,6 @@
 
 import Foundation
-import HTMLParser
+
 
 class ArtistDetailLoader {
     

@@ -1,6 +1,5 @@
 
-import HTMLParser
-
+import Foundation
 
 class AlbumDetailLoader {
     

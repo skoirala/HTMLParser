@@ -1,7 +1,4 @@
 
-import Foundation
-
-import libxml2
 
 extension xmlNode {
     

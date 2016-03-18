@@ -1,5 +1,5 @@
 
-import libxml2
+import Foundation
 
 public class HTMLParser {
     

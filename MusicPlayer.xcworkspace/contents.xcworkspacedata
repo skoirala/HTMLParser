@@ -4,7 +4,4 @@
    <FileRef
       location = "group:MusicPlayer.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:HTMLParser/HTMLParser.xcodeproj">
-   </FileRef>
 </Workspace>

@@ -1,5 +1,4 @@
 
-import libxml2
 
 public struct HTMLElementGenerator: GeneratorType {
     

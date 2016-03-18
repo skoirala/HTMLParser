@@ -1,6 +1,4 @@
 
-import libxml2
-
 public struct HTMLElements {
     
     private let node: xmlNodePtr
