@@ -1,0 +1,7 @@
+
+module libxml2 [system] {
+    link "xml2"
+    umbrella header "lib-xml-imports.h"
+    export *
+    module * { export * }
+}

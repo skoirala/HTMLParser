@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>MusicPlayer.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>2C4E89821C934D4B00543C0F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2C4E898B1C934D4C00543C0F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2CC9195C1C92BEC800C04532</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2CC919651C92BEC800C04532</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2CC9197F1C92BEE000C04532</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2CC919881C92BEE000C04532</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2CDF91A01C921CBE0060B95A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2CDF91B41C921CBE0060B95A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
