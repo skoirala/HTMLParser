@@ -485,7 +485,8 @@
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)",
-					"$(SDKROOT)/usr/include/libxml2/**",
+					"$(SDK_ROOT)/usr/include/libxml2/**",
+					"$(SDKROOT)/usr/include/curl/**",
 				);
 				INFOPLIST_FILE = MusicPlayer/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -556,7 +557,8 @@
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)",
-					"$(SDKROOT)/usr/include/libxml2/**",
+					"$(SDK_ROOT)/usr/include/libxml2/**",
+					"$(SDK_ROOT)/usr/include/curl/**",
 				);
 				INFOPLIST_FILE = MusicPlayer/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
