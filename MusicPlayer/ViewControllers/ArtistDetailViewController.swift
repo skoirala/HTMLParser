@@ -61,7 +61,7 @@ extension ArtistDetailViewController {
     private func createViews() {
         playPauseButton = PlayPauseButton()
         playPauseButton.frame = CGRectMake(0, 0, 22, 22)
-        playPauseButton.addTarget(self, action: #selector(playPause), forControlEvents: .TouchUpInside)
+        playPauseButton.addTarget(self, action: Selector("playPause"), forControlEvents: .TouchUpInside)
         let playPauseBarButtonItem = UIBarButtonItem(customView:playPauseButton)
         navigationItem.rightBarButtonItem = playPauseBarButtonItem
         

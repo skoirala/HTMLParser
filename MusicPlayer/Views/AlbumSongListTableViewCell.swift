@@ -39,7 +39,7 @@ public class AlbumSongListTableViewCell: UITableViewCell {
     
     private func createViews() {
         let playButton = PlayPauseButton(frame: .zero)
-        playButton.addTarget(self, action: #selector(playButtonTapped), forControlEvents: .TouchUpInside)
+        playButton.addTarget(self, action: Selector("playButtonTapped"), forControlEvents: .TouchUpInside)
         playButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(playButton)
         

@@ -117,7 +117,7 @@ extension MusicPlayer {
     }
     
     private func addObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(playerItemFinished), name: AVPlayerItemDidPlayToEndTimeNotification, object: audioPlayerItem)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("playerItemFinished"), name: AVPlayerItemDidPlayToEndTimeNotification, object: audioPlayerItem)
         audioPlayerItem?.addObserver(self, forKeyPath: "status", options: .New, context: nil)
         audioPlayerItem?.addObserver(self, forKeyPath: "duration", options: .New, context: nil)
         audioPlayer = AVPlayer(playerItem: audioPlayerItem!)

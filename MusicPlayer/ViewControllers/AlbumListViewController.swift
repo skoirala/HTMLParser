@@ -61,7 +61,7 @@ extension AlbumListViewController {
     
     private func createViews() {
         let button = UIButton(type: .DetailDisclosure)
-        button.addTarget(self, action: #selector(showArtistDetail), forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: Selector("showArtistDetail"), forControlEvents: .TouchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView:button)
 
         let imageView = UIImageView(frame: .zero)
