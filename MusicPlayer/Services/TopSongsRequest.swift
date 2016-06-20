@@ -3,7 +3,7 @@ import Foundation
 
 public class TopSongsRequest {
     private lazy var iTunesTopSongsRequestURL: URL = {
-        return URL(string: "https://itunes.apple.com/fi/rss/topsongs/limit=\(self.limit)/json")!
+        return URL(string: "https://itunes.apple.com/us/rss/topsongs/limit=\(self.limit)/json")!
     }()
     
     private let limit: Int
@@ -52,12 +52,16 @@ extension TopSongsRequest {
         
         let links = value["link"]
         
-        let previewURLContainer = links?.filter { a in
-            if a["attributes"]?["type"]?.string ?? "" == "audio/x-m4a" {
-                return true
+        var previewURL: String? = nil
+        
+        if let links = links where links.isArray() == true {
+            let previewURLContainer = links.filter { a in
+                return (a["attributes"]?["type"]?.string)! == "audio/x-m4a" }.flatMap {
+                    return $0["attributes"]?["href"]
             }
-            return false
-            }.last
+            previewURL = previewURLContainer.last!.string
+        }
+        
         
         
         return Song(identifier: identifier!,
@@ -68,6 +72,6 @@ extension TopSongsRequest {
                     smallImageURL: smallImageURL,
                     mediumImageURL: mediumImageURL,
                     bigImageURL: bigImageURL,
-                    previewURL: previewURLContainer?["attributes"]?["href"]?.string)
+                    previewURL: previewURL)
     }
 }

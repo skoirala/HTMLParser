@@ -4,7 +4,7 @@ import Foundation
 
 public struct JSON {
     
-    private let value: AnyObject
+    public let value: AnyObject
     
     public init(_ value: AnyObject) {
         self.value = value
@@ -12,6 +12,10 @@ public struct JSON {
 }
 
 extension JSON {
+    public func isArray() -> Bool {
+        return self.value is [AnyObject]
+    }
+    
     public var string: String? {
         return value as? String
     }

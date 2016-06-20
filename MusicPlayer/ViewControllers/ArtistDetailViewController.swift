@@ -117,12 +117,16 @@ extension ArtistDetailViewController {
         downloadMusicArt()
         loadArtistDetails()
         
-        player = MusicPlayer(delegate: self)
-        player.prepareToPlayURL(song.previewURL!)
-        progress = Progress()
-        progress.totalUnitCount = 100
-        progress.addChild(player.progress, withPendingUnitCount: 100)
-        progress.addObserver(self, forKeyPath: "fractionCompleted", options: .new, context: nil)
+        if let previewURL = song.previewURL {
+            player = MusicPlayer(delegate: self)
+            player.prepareToPlayURL(previewURL)
+            progress = Progress()
+            progress.totalUnitCount = 100
+            progress.addChild(player.progress, withPendingUnitCount: 100)
+            progress.addObserver(self, forKeyPath: "fractionCompleted", options: .new, context: nil)
+        } else {
+            self.playPauseButton.isEnabled = false
+        }
     }
     
     @objc private func playPause() {
