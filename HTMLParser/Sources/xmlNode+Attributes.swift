@@ -2,28 +2,26 @@
 
 extension xmlNode {
     
-    func attributes(nodePtr: xmlNodePtr) -> [String: String] {
+    func attributes(_ nodePtr: xmlNodePtr) -> [String: String] {
         
         var attributes: [String: String] = [:]
         
         var properties = self.properties
         
         while properties != nil {
-            let name = properties.memory.name
-            let value = xmlGetProp(nodePtr, name)
+            if let name = properties?.pointee.name,
+                let value = xmlGetProp(nodePtr, name) {
             
-            let nameString = String.fromCString(UnsafePointer(name))
-            let valueString = String.fromCString(UnsafePointer(value))
-            
-            if value != nil {
+                let nameString = String(cString: UnsafePointer(name))
+                let valueString = String(cString: UnsafePointer(value))
+                
                 xmlFree(value)
-            }
-            
-            if let nameString = nameString, valueString = valueString {
+                
                 attributes[nameString] = valueString
             }
             
-            properties = properties.memory.next
+            
+            properties = properties?.pointee.next
         }
         return attributes
     }

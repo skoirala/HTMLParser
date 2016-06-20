@@ -322,6 +322,9 @@
 				TargetAttributes = {
 					2CDF91A01C921CBE0060B95A = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = R4Z677ZZQA;
+						DevelopmentTeamName = "Sandeep Koirala";
+						LastSwiftMigration = 0800;
 					};
 					2CDF91B41C921CBE0060B95A = {
 						CreatedOnToolsVersion = 7.3;
@@ -490,6 +493,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sk.MusicPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/MusicPlayer-BridgingHeader.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -557,6 +561,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sk.MusicPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/MusicPlayer-BridgingHeader.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

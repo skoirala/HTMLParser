@@ -6,11 +6,11 @@ import UIKit
 public class PlayPauseButton: UIButton {
     
     public enum State {
-        case Playing
-        case Paused
+        case playing
+        case paused
     }
     
-    public var playingState: State = .Paused {
+    public var playingState: State = .paused {
         didSet {
             createButtonLayerPath()
         }
@@ -22,10 +22,10 @@ public class PlayPauseButton: UIButton {
         }
     }
     
-    public override var highlighted: Bool {
+    public override var isHighlighted: Bool {
         didSet {
-            if highlighted {
-                highLightLayer.fillColor = tintColor.colorWithAlphaComponent(0.3).CGColor
+            if isHighlighted {
+                highLightLayer.fillColor = tintColor.withAlphaComponent(0.3).cgColor
             } else {
                 highLightLayer.fillColor = nil
             }
@@ -46,7 +46,7 @@ public class PlayPauseButton: UIButton {
         
         outlineLayer.fillColor = nil
         outlineLayer.lineWidth = LineWidth
-        outlineLayer.strokeColor = UIColor.lightGrayColor().CGColor
+        outlineLayer.strokeColor = UIColor.lightGray().cgColor
         
         progressLayer.fillColor = nil
         progressLayer.lineCap = kCALineCapRound
@@ -70,13 +70,13 @@ public class PlayPauseButton: UIButton {
     }
     
     public override func tintColorDidChange() {
-        progressLayer.strokeColor = tintColor.CGColor
-        buttonLayer.fillColor = tintColor.CGColor
+        progressLayer.strokeColor = tintColor.cgColor
+        buttonLayer.fillColor = tintColor.cgColor
     }
     
     private func createLayersPath() {
-        let width = CGRectGetWidth(bounds)
-        let height = CGRectGetHeight(bounds)
+        let width = bounds.width
+        let height = bounds.height
         
         precondition(width == height)
         
@@ -85,14 +85,14 @@ public class PlayPauseButton: UIButton {
         
         
         let progressPath = UIBezierPath(arcCenter: center, radius: circleRadius, startAngle: CGFloat(-M_PI_2), endAngle: CGFloat(3 * M_PI_2), clockwise: true)
-        outlineLayer.path = progressPath.CGPath
-        progressLayer.path = progressPath.CGPath
-        highLightLayer.path = progressPath.CGPath
+        outlineLayer.path = progressPath.cgPath
+        progressLayer.path = progressPath.cgPath
+        highLightLayer.path = progressPath.cgPath
     }
     
     private func createButtonLayerPath() {
-        let width = CGRectGetWidth(bounds)
-        let height = CGRectGetHeight(bounds)
+        let width = bounds.width
+        let height = bounds.height
         
         let center = CGPoint(x: width * 0.5, y: height * 0.5)
         let circleRadius = width * 0.5 - LineWidth * 0.5
@@ -102,52 +102,52 @@ public class PlayPauseButton: UIButton {
         var path: UIBezierPath
         
         switch playingState {
-        case .Playing:
+        case .playing:
             path = pauseButtonPathInside(rect)
-        case .Paused:
+        case .paused:
             path = playButtonPathInside(rect)
         }
         
-        buttonLayer.path = path.CGPath
+        buttonLayer.path = path.cgPath
     }
     
     
-    private func pauseButtonPathInside(rect: CGRect) -> UIBezierPath {
-        let width = CGRectGetWidth(rect)
-        let height = CGRectGetHeight(rect)
+    private func pauseButtonPathInside(_ rect: CGRect) -> UIBezierPath {
+        let width = rect.width
+        let height = rect.height
         
         let spaceInBetween = width * 0.2
         
         let widthOfLine = (width - spaceInBetween) * 0.5
         
         let leftPath = UIBezierPath()
-        leftPath.moveToPoint(rect.origin)
-        leftPath.addLineToPoint(CGPoint(x: rect.origin.x, y: rect.origin.y + height))
-        leftPath.addLineToPoint(CGPoint(x: rect.origin.x + widthOfLine, y: rect.origin.y + height))
-        leftPath.addLineToPoint(CGPoint(x: rect.origin.x + widthOfLine, y: rect.origin.y))
-        leftPath.addLineToPoint(rect.origin)
-        leftPath.closePath()
+        leftPath.move(to: rect.origin)
+        leftPath.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + height))
+        leftPath.addLine(to: CGPoint(x: rect.origin.x + widthOfLine, y: rect.origin.y + height))
+        leftPath.addLine(to: CGPoint(x: rect.origin.x + widthOfLine, y: rect.origin.y))
+        leftPath.addLine(to: rect.origin)
+        leftPath.close()
         
         let rightPath = leftPath.copy() as! UIBezierPath
-        rightPath.applyTransform(CGAffineTransformMakeTranslation(widthOfLine + spaceInBetween,0))
+        rightPath.apply(CGAffineTransform(translationX: widthOfLine + spaceInBetween,y: 0))
         
         let compositePath = leftPath
-        compositePath.appendPath(rightPath)
+        compositePath.append(rightPath)
         return compositePath
     }
     
-    private func playButtonPathInside(rect: CGRect) -> UIBezierPath {
+    private func playButtonPathInside(_ rect: CGRect) -> UIBezierPath {
         let path = UIBezierPath()
-        path.moveToPoint(rect.origin)
-        path.addLineToPoint(CGPoint(x: rect.origin.x, y: rect.origin.y + rect.size.height))
-        path.addLineToPoint(CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + rect.size.height * 0.5))
-        path.addLineToPoint(rect.origin)
+        path.move(to: rect.origin)
+        path.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + rect.size.height))
+        path.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + rect.size.height * 0.5))
+        path.addLine(to: rect.origin)
         
         return path
     }
     
-    private func pointsAtCorners(center: CGPoint, circleRadius radius: CGFloat) -> [CGPoint] {
-        let cornersAngle = CGFloat(M_PI_4).stride(through: CGFloat(2 * M_PI), by: CGFloat(M_PI_2))
+    private func pointsAtCorners(_ center: CGPoint, circleRadius radius: CGFloat) -> [CGPoint] {
+        let cornersAngle = stride(from: CGFloat(M_PI_4), through: CGFloat(2 * M_PI), by: CGFloat(M_PI_2))
         
         return cornersAngle.map { angle in
             let angleWithFirstQuadrant = CGFloat(M_PI)

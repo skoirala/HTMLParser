@@ -5,27 +5,27 @@ class AlbumDetailLoader {
     
     let album: Album
     
-    let queue = NSOperationQueue()
+    let queue = OperationQueue()
     
     init(album: Album) {
         self.album = album
     }
     
-    func loadAlbumDetail(completion: [AlbumDetail] -> Void) {
+    func loadAlbumDetail(_ completion: ([AlbumDetail]) -> Void) {
         
         var albumSongs: [AlbumDetail] = []
         
-        var data: NSData?
+        var data: Data?
         
-        let downloadData = NSBlockOperation { [weak self] in
-            guard let album = self?.album , let albumURL  = NSURL(string:album.albumLink), let responseData = NSData(contentsOfURL: albumURL) else {
+        let downloadData = BlockOperation { [weak self] in
+            guard let album = self?.album , let albumURL  = URL(string:album.albumLink), let responseData = try? Data(contentsOf: albumURL) else {
                 self?.queue.cancelAllOperations()
                 return
             }
             data = responseData
         }
         
-        let parseDataOperation = NSBlockOperation {
+        let parseDataOperation = BlockOperation {
             guard let data = data else { return }
             let parser = HTMLParser(data: data)
             let rowElements = parser.queryXPath("//div[@class='track-list album music']//tbody//tr")
@@ -48,13 +48,13 @@ class AlbumDetailLoader {
             }
         }
         
-        let notifyOperation = NSBlockOperation {
+        let notifyOperation = BlockOperation {
             completion(albumSongs)
         }
         
         downloadData >> parseDataOperation >> notifyOperation
         queue.addOperations([downloadData, parseDataOperation], waitUntilFinished: false)
-        NSOperationQueue.mainQueue().addOperation(notifyOperation)
+        OperationQueue.main().addOperation(notifyOperation)
     }
     
 }

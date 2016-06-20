@@ -3,7 +3,8 @@ import UIKit
 
 public class ImageDownloader {
     
-    public func imageForURL(URL: String, onDownloadCompletion completion: UIImage -> Void) -> UIImage? {
+    @discardableResult
+    public func imageForURL(_ URL: String, onDownloadCompletion completion: (UIImage) -> Void) -> UIImage? {
         let image = downloadedImages[URL]
         
         if image == nil {
@@ -12,7 +13,7 @@ public class ImageDownloader {
         return image
     }
     
-    public func downloadImageForURL(URL: String, completion: UIImage -> Void) {
+    public func downloadImageForURL(_ URL: String, completion: (UIImage) -> Void) {
         precondition(downloadedImages[URL] == nil, "already downloaded image")
         
         if  downloadingImages.contains(URL) {
@@ -21,12 +22,12 @@ public class ImageDownloader {
         
         downloadingImages.append(URL)
         
-        dispatch_async(imageDownloadQueue) { [weak self] in
-            if let data = NSData(contentsOfURL: NSURL(string: URL)!),
+        imageDownloadQueue.async { [weak self] in
+            if let data = try? Data(contentsOf: Foundation.URL(string: URL)!),
                 image = UIImage(data: data) {
-                dispatch_async(dispatch_get_main_queue()) {
-                    if let indexOfDownloading = self?.downloadingImages.indexOf(URL) {
-                        self?.downloadingImages.removeAtIndex(indexOfDownloading)
+                DispatchQueue.main.async {
+                    if let indexOfDownloading = self?.downloadingImages.index(of: URL) {
+                        self?.downloadingImages.remove(at: indexOfDownloading)
                     }
                     completion(image)
                     self?.downloadedImages[URL] = image
@@ -36,7 +37,7 @@ public class ImageDownloader {
         }
     }
     
-    private let imageDownloadQueue = dispatch_queue_create("com.imagerepository.queue", DISPATCH_QUEUE_SERIAL)
+    private let imageDownloadQueue = DispatchQueue(label: "com.imagerepository.queue", attributes: DispatchQueueAttributes.serial)
     private var downloadedImages: [String: UIImage] = [:]
     private var downloadingImages:[String] = []
 }

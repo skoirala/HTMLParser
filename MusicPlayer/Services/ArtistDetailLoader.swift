@@ -4,7 +4,7 @@ import Foundation
 
 class ArtistDetailLoader {
     
-    let queue = NSOperationQueue()
+    let queue = OperationQueue()
     
     let song: Song
     var parser: HTMLParser!
@@ -14,23 +14,23 @@ class ArtistDetailLoader {
     }
     
     
-    func loadArtistDetail(completion: ArtistDetail -> Void) {
+    func loadArtistDetail(_ completion: (ArtistDetail) -> Void) {
         
-        var data: NSData?
+        var data: Data?
         var biographyText: String!
         var albums = [Album]()
         
-        let dataOperation = NSBlockOperation { [weak self] in
+        let dataOperation = BlockOperation { [weak self] in
             guard let artistURLString = self?.song.artistLink,
-                let artistURL = NSURL(string: artistURLString),
-                let artistLinkData = NSData(contentsOfURL: artistURL)  else {
+                let artistURL = URL(string: artistURLString),
+                let artistLinkData = try? Data(contentsOf: artistURL)  else {
                     return
             }
             data = artistLinkData
         }
         
         
-        let parseBiographyOperation = NSBlockOperation { [weak self] in
+        let parseBiographyOperation = BlockOperation { [weak self] in
             
             guard let data = data else {
                 self?.queue.cancelAllOperations()
@@ -49,7 +49,7 @@ class ArtistDetailLoader {
             biographyText = text
         }
         
-        let parseAlbumNamesOperation = NSBlockOperation { [weak self] in
+        let parseAlbumNamesOperation = BlockOperation { [weak self] in
             guard let xPathResult = self?.parser.queryXPath("//div[@class='swoosh lockup-container album music large']//div[@itemprop='album']") else { return }
             
             let albumNamePredicate = { (element: HTMLElement) in
@@ -87,14 +87,14 @@ class ArtistDetailLoader {
             }
         }
         
-        let createArtistOperation = NSBlockOperation {
+        let createArtistOperation = BlockOperation {
             let artistDetail = ArtistDetail(biography: biographyText, albums: albums)
             completion(artistDetail)
         }
         
         dataOperation >> parseBiographyOperation >> parseAlbumNamesOperation >> createArtistOperation
         queue.addOperations([dataOperation, parseBiographyOperation, parseAlbumNamesOperation], waitUntilFinished: false)
-        NSOperationQueue.mainQueue().addOperation(createArtistOperation)
+        OperationQueue.main().addOperation(createArtistOperation)
         
     }
 }

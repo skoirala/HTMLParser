@@ -27,12 +27,12 @@ extension TopSongsListViewController {
         listView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(listView)
         let constraints = [
-            listView.topAnchor.constraintEqualToAnchor(view.topAnchor),
-            listView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
-            listView.leftAnchor.constraintEqualToAnchor(view.leftAnchor),
-            listView.rightAnchor.constraintEqualToAnchor(view.rightAnchor)
+            listView.topAnchor.constraint(equalTo: view.topAnchor),
+            listView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            listView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            listView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ]
-        constraints.forEach { $0.active = true }
+        constraints.forEach { $0.isActive = true }
     }
     
     private func setupListViewAdapter() {
@@ -46,7 +46,7 @@ extension TopSongsListViewController {
         listView.dataSource = listViewAdapter
     }
     
-    private func showAlbumDetail(song: Song) {
+    private func showAlbumDetail(_ song: Song) {
         let songDetailViewController = AlbumListViewController(song: song)
         navigationController?.pushViewController(songDetailViewController, animated: true)
     }

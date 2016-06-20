@@ -34,7 +34,7 @@ extension JSON {
     }
 }
 
-extension JSON: CollectionType {
+extension JSON: Collection {
     
     public var startIndex: Int {
         if value is [AnyObject] {
@@ -48,6 +48,10 @@ extension JSON: CollectionType {
             return value.count
         }
         fatalError("cannot use collection methods for type \(value.dynamicType)")
+    }
+    
+    public func index(after i: Int) -> Int {
+        return i + 1
     }
     
     public subscript(index: Int) -> JSON {

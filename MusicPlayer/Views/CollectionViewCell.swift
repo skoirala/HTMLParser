@@ -31,17 +31,17 @@ public class CollectionViewCell: UICollectionViewCell {
         
         
         let label = UILabel()
-        label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleCaption2)
+        label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyleCaption2)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.lineBreakMode = .ByWordWrapping
-        label.textAlignment = .Center
+        label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .center
 
-        let blurEffect = UIBlurEffect(style: .ExtraLight)
+        let blurEffect = UIBlurEffect(style: .extraLight)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         
-        let vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
         let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
         vibrancyView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -49,27 +49,27 @@ public class CollectionViewCell: UICollectionViewCell {
         blurEffectView.contentView.addSubview(vibrancyView)
         contentView.addSubview(blurEffectView)
         
-        let constraints = [imageView.topAnchor.constraintEqualToAnchor(contentView.topAnchor),
-                           imageView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
-                           imageView.leftAnchor.constraintEqualToAnchor(contentView.leftAnchor),
-                           imageView.rightAnchor.constraintEqualToAnchor(contentView.rightAnchor),
+        let constraints = [imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                           imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+                           imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+                           imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
                            
-                           blurEffectView.topAnchor.constraintEqualToAnchor(contentView.bottomAnchor, constant: -50),
-                           blurEffectView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
-                           blurEffectView.leftAnchor.constraintEqualToAnchor(contentView.leftAnchor),
-                           blurEffectView.rightAnchor.constraintEqualToAnchor(contentView.rightAnchor),
+                           blurEffectView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50),
+                           blurEffectView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+                           blurEffectView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+                           blurEffectView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
                            
-                           vibrancyView.topAnchor.constraintEqualToAnchor(blurEffectView.contentView.topAnchor),
-                           vibrancyView.bottomAnchor.constraintEqualToAnchor(blurEffectView.contentView.bottomAnchor),
-                           vibrancyView.leftAnchor.constraintEqualToAnchor(blurEffectView.contentView.leftAnchor),
-                           vibrancyView.rightAnchor.constraintEqualToAnchor(blurEffectView.contentView.rightAnchor),
+                           vibrancyView.topAnchor.constraint(equalTo: blurEffectView.contentView.topAnchor),
+                           vibrancyView.bottomAnchor.constraint(equalTo: blurEffectView.contentView.bottomAnchor),
+                           vibrancyView.leftAnchor.constraint(equalTo: blurEffectView.contentView.leftAnchor),
+                           vibrancyView.rightAnchor.constraint(equalTo: blurEffectView.contentView.rightAnchor),
                            
-                           label.topAnchor.constraintEqualToAnchor(vibrancyView.contentView.topAnchor),
-                           label.bottomAnchor.constraintEqualToAnchor(vibrancyView.contentView.bottomAnchor),
-                           label.leftAnchor.constraintEqualToAnchor(vibrancyView.contentView.leftAnchor, constant: 5),
-                           label.rightAnchor.constraintEqualToAnchor(vibrancyView.contentView.rightAnchor, constant: -5)
+                           label.topAnchor.constraint(equalTo: vibrancyView.contentView.topAnchor),
+                           label.bottomAnchor.constraint(equalTo: vibrancyView.contentView.bottomAnchor),
+                           label.leftAnchor.constraint(equalTo: vibrancyView.contentView.leftAnchor, constant: 5),
+                           label.rightAnchor.constraint(equalTo: vibrancyView.contentView.rightAnchor, constant: -5)
                         ]
-        constraints.forEach { $0.active = true }
+        constraints.forEach { $0.isActive = true }
         
         self.imageView = imageView
         self.label = label

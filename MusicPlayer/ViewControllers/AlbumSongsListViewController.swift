@@ -6,7 +6,7 @@ public class AlbumSongsListViewController: UITableViewController {
     
     public init(album: Album) {
         self.album = album
-        super.init(style: .Plain)
+        super.init(style: .plain)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -29,9 +29,9 @@ public class AlbumSongsListViewController: UITableViewController {
         
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .ScaleAspectFit
+        imageView.contentMode = .scaleAspectFit
 
-        let blurEffect = UIBlurEffect(style: .ExtraLight)
+        let blurEffect = UIBlurEffect(style: .extraLight)
         let blurredView = UIVisualEffectView(effect: blurEffect)
         blurredView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -39,20 +39,20 @@ public class AlbumSongsListViewController: UITableViewController {
         backgroundView.addSubview(blurredView)
         
         tableView.backgroundView = backgroundView
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
                 
         title = album.name
                 let constraints = [
-                           blurredView.topAnchor.constraintEqualToAnchor(backgroundView.topAnchor),
-                           blurredView.bottomAnchor.constraintEqualToAnchor(backgroundView.bottomAnchor),
-                           blurredView.leftAnchor.constraintEqualToAnchor(backgroundView.leftAnchor),
-                           blurredView.rightAnchor.constraintEqualToAnchor(backgroundView.rightAnchor),
-                           imageView.topAnchor.constraintEqualToAnchor(backgroundView.topAnchor),
-                           imageView.bottomAnchor.constraintEqualToAnchor(backgroundView.bottomAnchor),
-                           imageView.leftAnchor.constraintEqualToAnchor(backgroundView.leftAnchor),
-                           imageView.rightAnchor.constraintEqualToAnchor(backgroundView.rightAnchor)
+                           blurredView.topAnchor.constraint(equalTo: backgroundView.topAnchor),
+                           blurredView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor),
+                           blurredView.leftAnchor.constraint(equalTo: backgroundView.leftAnchor),
+                           blurredView.rightAnchor.constraint(equalTo: backgroundView.rightAnchor),
+                           imageView.topAnchor.constraint(equalTo: backgroundView.topAnchor),
+                           imageView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor),
+                           imageView.leftAnchor.constraint(equalTo: backgroundView.leftAnchor),
+                           imageView.rightAnchor.constraint(equalTo: backgroundView.rightAnchor)
         ]
-        constraints.forEach { $0.active = true }
+        constraints.forEach { $0.isActive = true }
         
         self.imageView = imageView
     }

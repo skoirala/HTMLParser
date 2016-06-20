@@ -24,9 +24,9 @@ public class ArtistDetailViewController: UIViewController {
         setup()
     }
     
-    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
         if  keyPath == "fractionCompleted" {
-            guard let fractionCompleted = change?[NSKeyValueChangeNewKey] as? Double else {
+            guard let fractionCompleted = change?[NSKeyValueChangeKey.newKey] as? Double else {
                 return
             }
             
@@ -34,7 +34,7 @@ public class ArtistDetailViewController: UIViewController {
             return
         }
         
-        super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
     }
     
     deinit {
@@ -46,7 +46,7 @@ public class ArtistDetailViewController: UIViewController {
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
     
-    private var progress: NSProgress!
+    private var progress: Progress!
     private let song: Song
     private var player: MusicPlayer!
     private let imageDownloader = ImageDownloader()
@@ -60,26 +60,26 @@ extension ArtistDetailViewController {
     
     private func createViews() {
         playPauseButton = PlayPauseButton()
-        playPauseButton.frame = CGRectMake(0, 0, 22, 22)
-        playPauseButton.addTarget(self, action: Selector("playPause"), forControlEvents: .TouchUpInside)
+        playPauseButton.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
+        playPauseButton.addTarget(self, action: #selector(playPause), for: .touchUpInside)
         let playPauseBarButtonItem = UIBarButtonItem(customView:playPauseButton)
         navigationItem.rightBarButtonItem = playPauseBarButtonItem
         
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .ScaleAspectFit
+        imageView.contentMode = .scaleAspectFit
         view.addSubview(imageView)
         
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         label = UILabel()
-        label.textColor = UIColor.darkGrayColor()
+        label.textColor = UIColor.darkGray()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.lineBreakMode = .ByWordWrapping
+        label.lineBreakMode = .byWordWrapping
         
-        let blurEffect = UIBlurEffect(style: .ExtraLight)
+        let blurEffect = UIBlurEffect(style: .extraLight)
         let blurredView = UIVisualEffectView(effect: blurEffect)
         blurredView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(blurredView)
@@ -88,30 +88,30 @@ extension ArtistDetailViewController {
         blurredView.contentView.addSubview(scrollView)
         
         let constraints = [
-            imageView.topAnchor.constraintEqualToAnchor(view.topAnchor),
-            imageView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
-            imageView.leftAnchor.constraintEqualToAnchor(view.leftAnchor),
-            imageView.rightAnchor.constraintEqualToAnchor(view.rightAnchor),
-            blurredView.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor),
-            blurredView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
-            blurredView.leftAnchor.constraintEqualToAnchor(view.leftAnchor),
-            blurredView.rightAnchor.constraintEqualToAnchor(view.rightAnchor),
-            scrollView.topAnchor.constraintEqualToAnchor(blurredView.topAnchor),
-            scrollView.bottomAnchor.constraintEqualToAnchor(blurredView.bottomAnchor),
-            scrollView.leftAnchor.constraintEqualToAnchor(blurredView.leftAnchor),
-            scrollView.rightAnchor.constraintEqualToAnchor(blurredView.rightAnchor),
+            imageView.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            imageView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            imageView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            blurredView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
+            blurredView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            blurredView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            blurredView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            scrollView.topAnchor.constraint(equalTo: blurredView.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: blurredView.bottomAnchor),
+            scrollView.leftAnchor.constraint(equalTo: blurredView.leftAnchor),
+            scrollView.rightAnchor.constraint(equalTo: blurredView.rightAnchor),
             
-            label.topAnchor.constraintEqualToAnchor(scrollView.topAnchor, constant: 20),
-            label.bottomAnchor.constraintEqualToAnchor(scrollView.bottomAnchor, constant: -20),
-            label.leftAnchor.constraintEqualToAnchor(scrollView.leftAnchor, constant: 20),
-            label.rightAnchor.constraintEqualToAnchor(scrollView.rightAnchor, constant: -20),
+            label.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
+            label.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
+            label.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20),
+            label.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: -20),
             ]
-        constraints.forEach { $0.active = true }
+        constraints.forEach { $0.isActive = true }
         self.imageView = imageView
     }
     
     private func setup() {
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white()
         title = song.artistName
         
         downloadMusicArt()
@@ -119,18 +119,18 @@ extension ArtistDetailViewController {
         
         player = MusicPlayer(delegate: self)
         player.prepareToPlayURL(song.previewURL!)
-        progress = NSProgress()
+        progress = Progress()
         progress.totalUnitCount = 100
         progress.addChild(player.progress, withPendingUnitCount: 100)
-        progress.addObserver(self, forKeyPath: "fractionCompleted", options: .New, context: nil)
+        progress.addObserver(self, forKeyPath: "fractionCompleted", options: .new, context: nil)
     }
     
     @objc private func playPause() {
         if player.isPlaying {
-            playPauseButton.playingState = .Paused
+            playPauseButton.playingState = .paused
             player.pause()
         } else {
-            playPauseButton.playingState = .Playing
+            playPauseButton.playingState = .playing
             player.play()
         }
     }
@@ -157,6 +157,6 @@ extension ArtistDetailViewController {
 extension ArtistDetailViewController: MusicPlayerDelegate {
     
     public func playerItemDidFinishPlaying() {
-        playPauseButton.playingState = .Paused
+        playPauseButton.playingState = .paused
     }
 }

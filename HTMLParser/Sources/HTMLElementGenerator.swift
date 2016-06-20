@@ -1,8 +1,8 @@
 
 
-public struct HTMLElementGenerator: GeneratorType {
+public struct HTMLElementGenerator: IteratorProtocol {
     
-    private var node: xmlNodePtr
+    private var node: xmlNodePtr?
     
     init(node: xmlNodePtr) {
         self.node = node
@@ -15,8 +15,8 @@ public struct HTMLElementGenerator: GeneratorType {
         }
         
         let tempNode = node
-        node = node.memory.next
+        node = node?.pointee.next
         
-        return HTMLElement(node: tempNode)
+        return HTMLElement(node: tempNode!)
     }
 }

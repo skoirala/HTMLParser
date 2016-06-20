@@ -3,40 +3,40 @@ import Foundation
 
 public class JSONNetworkRequest {
     
-    private let url: NSURL
-    private var task: NSURLSessionTask!
+    private let url: URL
+    private var task: URLSessionTask!
     
-    public init(url: NSURL) {
+    public init(url: URL) {
         self.url = url
     }
     
-    func convertToJSON(data: NSData) -> (JSON?, String?) {
-        guard let jsonObject = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) else {
+    func convertToJSON(_ data: Data) -> (JSON?, String?) {
+        guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
             return (nil, "JSON conversion failed")
         }
         return (JSON(jsonObject), nil)
     }
     
-    public func startWithCompletion(completion: Result<JSON> -> Void) {
-        let session = NSURLSession.sharedSession()
-        task = session.dataTaskWithURL(url) { data, response, error in
+    public func startWithCompletion(_ completion: (Result<JSON>) -> Void) {
+        let session = URLSession.shared()
+        task = session.dataTask(with: url) { data, response, error in
             
             guard let data = data else {
-                completion(Result.Failure(error!.localizedDescription))
+                completion(Result.failure(error!.localizedDescription))
                 return
             }
             
-            if  let response = response as? NSHTTPURLResponse where response.statusCode > 200 {
-                completion(Result.Failure("Unexpected status code"))
+            if  let response = response as? HTTPURLResponse where response.statusCode > 200 {
+                completion(Result.failure("Unexpected status code"))
                 return
             }
             
             
-            dispatch_async(dispatch_get_main_queue()) {
-                if let object = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) {
-                completion(Result.Success(JSON(object)))
+            DispatchQueue.main.async {
+                if let object = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                completion(Result.success(JSON(object)))
                 } else {
-                    completion(Result.Failure("Unexpected error occurred"))
+                    completion(Result.failure("Unexpected error occurred"))
                 }
             }
         }

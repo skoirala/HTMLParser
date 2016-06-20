@@ -5,12 +5,12 @@ public class HTMLParser {
     
     private let htmlDoc: htmlDocPtr
     
-    public init(data: NSData) {
-        let bytes = UnsafePointer<Int8>(data.bytes)
+    public init(data: Data) {
+        let bytes = UnsafePointer<Int8>((data as NSData).bytes)
         
         let options = HTML_PARSE_RECOVER.rawValue | HTML_PARSE_NOERROR.rawValue | HTML_PARSE_NOWARNING.rawValue
         htmlDoc = htmlReadMemory(bytes,
-                                 Int32(data.length),
+                                 Int32(data.count),
                                  nil,
                                  nil,
                                  Int32(options))
@@ -27,7 +27,7 @@ extension HTMLParser {
     
     public func rootNode() -> HTMLElement {
         let node = xmlDocGetRootElement(htmlDoc)        
-        return HTMLElement(node: node)!
+        return HTMLElement(node: node!)!
     }
     
     
@@ -36,7 +36,7 @@ extension HTMLParser {
     }
     
     
-    public func queryXPath(path: String) -> [HTMLElement] {
+    public func queryXPath(_ path: String) -> [HTMLElement] {
         var elements: [HTMLElements] = []
         
         let xPathContext = xmlXPathNewContext(htmlDoc)
@@ -50,7 +50,7 @@ extension HTMLParser {
             return []
         }
         
-        let nodeSetVal = result.memory.nodesetval
+        let nodeSetVal = result?.pointee.nodesetval
         
         if (nodeSetVal == nil) {
             xmlXPathFreeObject(result)
@@ -58,11 +58,11 @@ extension HTMLParser {
             return []
         }
         
-        let numberOfNodes = Int(nodeSetVal.memory.nodeNr)
-        let nodePtr = nodeSetVal.memory.nodeTab
+        let numberOfNodes = Int((nodeSetVal?.pointee.nodeNr)!)
+        let nodePtr = nodeSetVal?.pointee.nodeTab
         
         for i in 0 ..< numberOfNodes {
-            elements.append(HTMLElements(node: nodePtr[i]))
+            elements.append(HTMLElements(node: (nodePtr?[i]!)!))
         }
         xmlXPathFreeContext(xPathContext)
         xmlXPathFreeObject(result)

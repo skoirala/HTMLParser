@@ -7,17 +7,17 @@ public class AlbumSongListTableViewCell: UITableViewCell {
     public weak var playButton: PlayPauseButton!
     public weak var titleLabel: UILabel!
 
-    public var onPlayButtonTapped: (Void -> Void)!
+    public var onPlayButtonTapped: ((Void) -> Void)!
     
     public func setPlaying() {
-        playButton.playingState = .Playing
+        playButton.playingState = .playing
     }
     
     public func setPaused() {
-        playButton.playingState = .Paused
+        playButton.playingState = .paused
     }
     
-    public func updateProgress(progress: CGFloat) {
+    public func updateProgress(_ progress: CGFloat) {
         playButton.progress = progress
     }
     
@@ -28,7 +28,7 @@ public class AlbumSongListTableViewCell: UITableViewCell {
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear()
         createViews()
         setupConstraints()
     }
@@ -39,7 +39,7 @@ public class AlbumSongListTableViewCell: UITableViewCell {
     
     private func createViews() {
         let playButton = PlayPauseButton(frame: .zero)
-        playButton.addTarget(self, action: Selector("playButtonTapped"), forControlEvents: .TouchUpInside)
+        playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         playButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(playButton)
         
@@ -63,11 +63,11 @@ public class AlbumSongListTableViewCell: UITableViewCell {
         let playButtonVFormat = "V:|-(>=0)-[playButton]-(>=0)-|"
         
         [hFormat, titleLabelVFormat, playButtonVFormat].forEach { format in
-            let constraints = NSLayoutConstraint.constraintsWithVisualFormat(format, options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: views)
+            let constraints = NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: views)
             contentView.addConstraints(constraints)
         }
-        playButton.widthAnchor.constraintEqualToAnchor(playButton.heightAnchor).active = true
-        playButton.centerYAnchor.constraintEqualToAnchor(contentView.centerYAnchor).active = true
+        playButton.widthAnchor.constraint(equalTo: playButton.heightAnchor).isActive = true
+        playButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
     }
 }

@@ -40,7 +40,7 @@ public class TopSongListView: UIView {
     private func createViews() {
         let kGapBetweenBoundaries: CGFloat = 2
         let numberOfColumns: CGFloat = 2
-        let screenWidth = UIScreen.mainScreen().bounds.size.width
+        let screenWidth = UIScreen.main().bounds.size.width
         
         
         let gapInBetween: CGFloat = kGapBetweenBoundaries
@@ -53,22 +53,22 @@ public class TopSongListView: UIView {
         flowLayout.minimumInteritemSpacing = gapInBetween
         flowLayout.sectionInset = sectionInset
         flowLayout.minimumLineSpacing = lineSpacing
-        flowLayout.itemSize = CGSizeMake(widthOfItem, widthOfItem)
-        flowLayout.scrollDirection = .Vertical
+        flowLayout.itemSize = CGSize(width: widthOfItem, height: widthOfItem)
+        flowLayout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: flowLayout)
-        collectionView.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.ReuseIdentifier)
-        collectionView.backgroundColor = UIColor.clearColor()
+        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.ReuseIdentifier)
+        collectionView.backgroundColor = UIColor.clear()
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)
         
         let allConstraints = [
-            collectionView.topAnchor.constraintEqualToAnchor(topAnchor),
-            collectionView.bottomAnchor.constraintEqualToAnchor(bottomAnchor),
-            collectionView.leftAnchor.constraintEqualToAnchor(leftAnchor),
-            collectionView.rightAnchor.constraintEqualToAnchor(rightAnchor)
+            collectionView.topAnchor.constraint(equalTo: topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
+            collectionView.rightAnchor.constraint(equalTo: rightAnchor)
         ]
-        allConstraints.forEach { $0.active = true }
+        allConstraints.forEach { $0.isActive = true }
         
         self.collectionView = collectionView
     }

@@ -60,17 +60,17 @@ extension AlbumListViewController {
     }
     
     private func createViews() {
-        let button = UIButton(type: .DetailDisclosure)
-        button.addTarget(self, action: Selector("showArtistDetail"), forControlEvents: .TouchUpInside)
+        let button = UIButton(type: .detailDisclosure)
+        button.addTarget(self, action: #selector(showArtistDetail), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView:button)
 
         let imageView = UIImageView(frame: .zero)
-        imageView.contentMode = .ScaleAspectFit
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
         
         
-        let blurEffect = UIBlurEffect(style: .ExtraLight)
+        let blurEffect = UIBlurEffect(style: .extraLight)
         let blurredView = UIVisualEffectView(effect: blurEffect)
         blurredView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(blurredView)
@@ -80,32 +80,32 @@ extension AlbumListViewController {
         
         
         let constraints = [
-            imageView.topAnchor.constraintEqualToAnchor(view.topAnchor),
-            imageView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
-            imageView.leftAnchor.constraintEqualToAnchor(view.leftAnchor),
-            imageView.rightAnchor.constraintEqualToAnchor(view.rightAnchor),
+            imageView.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            imageView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            imageView.rightAnchor.constraint(equalTo: view.rightAnchor),
             
-            blurredView.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor),
-            blurredView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
-            blurredView.leftAnchor.constraintEqualToAnchor(view.leftAnchor),
-            blurredView.rightAnchor.constraintEqualToAnchor(view.rightAnchor),
+            blurredView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
+            blurredView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            blurredView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            blurredView.rightAnchor.constraint(equalTo: view.rightAnchor),
             
-            listView.topAnchor.constraintEqualToAnchor(blurredView.contentView.topAnchor),
-            listView.bottomAnchor.constraintEqualToAnchor(blurredView.contentView.bottomAnchor),
-            listView.leftAnchor.constraintEqualToAnchor(blurredView.contentView.leftAnchor),
-            listView.rightAnchor.constraintEqualToAnchor(blurredView.contentView.rightAnchor)
+            listView.topAnchor.constraint(equalTo: blurredView.contentView.topAnchor),
+            listView.bottomAnchor.constraint(equalTo: blurredView.contentView.bottomAnchor),
+            listView.leftAnchor.constraint(equalTo: blurredView.contentView.leftAnchor),
+            listView.rightAnchor.constraint(equalTo: blurredView.contentView.rightAnchor)
         ]
-        constraints.forEach { $0.active = true }
+        constraints.forEach { $0.isActive = true }
         
         self.imageView = imageView
     }
     
-    private func showAlbumDetail(song: Song) {
+    private func showAlbumDetail(_ song: Song) {
         let songDetailViewController = AlbumListViewController(song: song)
         navigationController?.pushViewController(songDetailViewController, animated: true)
     }
     
-    private func showSongListViewController(album: Album) {
+    private func showSongListViewController(_ album: Album) {
         let albumSongViewController = AlbumSongsListViewController(album: album)
         navigationController?.pushViewController(albumSongViewController, animated: true)
     }

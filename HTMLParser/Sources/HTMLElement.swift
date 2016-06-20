@@ -13,33 +13,33 @@ public struct HTMLElement {
         var name: String? = nil
         var text: String? = nil
         
-        if node.memory.type == XML_TEXT_NODE {
+        if node.pointee.type == XML_TEXT_NODE {
             let rawContent = xmlNodeGetContent(node)
             
             if rawContent != nil {
-                text = String.fromCString(UnsafePointer(rawContent))
+                text = String(cString: UnsafePointer(rawContent!))
                 xmlFree(rawContent)
             }
             
-            text = text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            text = text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             
             if text?.characters.count == 0 {
                 return nil
             }
             
         } else {
-            name = String.fromCString(UnsafePointer(node.memory.name))
+            name = String(cString: UnsafePointer(node.pointee.name))
         }
         
         self.name = name
         self.text = text
         self.children = HTMLElements(node: node)
-        self.attributes = node.memory.attributes(node)
+        self.attributes = node.pointee.attributes(node)
     }
     
 
     public var isTextNode: Bool {
-        return node.memory.type == XML_TEXT_NODE
+        return node.pointee.type == XML_TEXT_NODE
     }
     
     
@@ -57,14 +57,14 @@ public struct HTMLElement {
     }
     
     
-    private func findNestedChildElementsInArray(inout array: [HTMLElement], inNode node: xmlNodePtr) {
-        var currentNode = node.memory.children
+    private func findNestedChildElementsInArray(_ array: inout [HTMLElement], inNode node: xmlNodePtr) {
+        var currentNode = node.pointee.children
         while  currentNode != nil {
-            if let node = HTMLElement(node: currentNode) {
+            if let node = HTMLElement(node: currentNode!) {
                 array.append(node)
-                findNestedChildElementsInArray(&array, inNode: currentNode)
+                findNestedChildElementsInArray(&array, inNode: currentNode!)
             }
-            currentNode = currentNode.memory.next
+            currentNode = currentNode?.pointee.next
         }
     }
     

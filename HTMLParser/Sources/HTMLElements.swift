@@ -8,8 +8,8 @@ public struct HTMLElements {
     }
 }
 
-extension HTMLElements: SequenceType {
-    public func generate() -> HTMLElementGenerator {
+extension HTMLElements: Sequence {
+    public func makeIterator() -> HTMLElementGenerator {
         return HTMLElementGenerator(node: node)
     }
 }

@@ -2,8 +2,8 @@
 import Foundation
 
 public class TopSongsRequest {
-    private lazy var iTunesTopSongsRequestURL: NSURL = {
-        return NSURL(string: "https://itunes.apple.com/fi/rss/topsongs/limit=\(self.limit)/json")!
+    private lazy var iTunesTopSongsRequestURL: URL = {
+        return URL(string: "https://itunes.apple.com/fi/rss/topsongs/limit=\(self.limit)/json")!
     }()
     
     private let limit: Int
@@ -15,7 +15,7 @@ public class TopSongsRequest {
         jsonRequest = JSONNetworkRequest(url:iTunesTopSongsRequestURL)
     }
     
-    public func startWithCompletion(completion: Result<[Song]> -> Void) {
+    public func startWithCompletion(_ completion: (Result<[Song]>) -> Void) {
         jsonRequest.startWithCompletion { result in
             self.handleResult(result, completion: completion)
         }
@@ -25,22 +25,22 @@ public class TopSongsRequest {
 
 extension TopSongsRequest {
     
-    private func handleResult(result: Result<JSON>, completion: Result<[Song]> -> Void) {
+    private func handleResult(_ result: Result<JSON>, completion: (Result<[Song]>) -> Void) {
         switch result {
-        case .Failure(let message):
-            completion(Result.Failure(message))
-        case .Success(let json):
+        case .failure(let message):
+            completion(Result.failure(message))
+        case .success(let json):
             let entry = json["feed"]?["entry"]
             if let entry = entry {
                 let songs = entry.map(createSong)
-                completion(Result.Success(songs))
+                completion(Result.success(songs))
                 return
             }
-            completion(Result.Failure("Unknown error occurred"))
+            completion(Result.failure("Unknown error occurred"))
         }
     }
     
-    private func createSong(value: JSON) -> Song {
+    private func createSong(_ value: JSON) -> Song {
         let identifier = value["id"]?["attributes"]?["im:id"]?.string
         let identifierLink = value["id"]?["label"]?.string
         let artistName = value["im:artist"]?["label"]?.string
