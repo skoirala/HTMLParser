@@ -1,6 +1,14 @@
 
 import Foundation
 
+precedencegroup OperationPrecedence {
+    associativity: left
+}
+
+
+infix operator >> : OperationPrecedence
+
+
 class AlbumDetailLoader {
     
     let album: Album
@@ -11,7 +19,7 @@ class AlbumDetailLoader {
         self.album = album
     }
     
-    func loadAlbumDetail(_ completion: ([AlbumDetail]) -> Void) {
+    func loadAlbumDetail(_ completion: @escaping ([AlbumDetail]) -> Void) {
         
         var albumSongs: [AlbumDetail] = []
         
@@ -54,9 +62,8 @@ class AlbumDetailLoader {
         
         downloadData >> parseDataOperation >> notifyOperation
         queue.addOperations([downloadData, parseDataOperation], waitUntilFinished: false)
-        OperationQueue.main().addOperation(notifyOperation)
+        OperationQueue.main.addOperation(notifyOperation)
     }
     
 }
 
-infix operator >> { associativity left precedence 200 }

@@ -15,7 +15,7 @@ public class TopSongsRequest {
         jsonRequest = JSONNetworkRequest(url:iTunesTopSongsRequestURL)
     }
     
-    public func startWithCompletion(_ completion: (Result<[Song]>) -> Void) {
+    public func startWithCompletion(_ completion: @escaping (Result<[Song]>) -> Void) {
         jsonRequest.startWithCompletion { result in
             self.handleResult(result, completion: completion)
         }
@@ -25,7 +25,7 @@ public class TopSongsRequest {
 
 extension TopSongsRequest {
     
-    private func handleResult(_ result: Result<JSON>, completion: (Result<[Song]>) -> Void) {
+    internal func handleResult(_ result: Result<JSON>, completion: (Result<[Song]>) -> Void) {
         switch result {
         case .failure(let message):
             completion(Result.failure(message))
@@ -54,7 +54,7 @@ extension TopSongsRequest {
         
         var previewURL: String? = nil
         
-        if let links = links where links.isArray() == true {
+        if let links = links, links.isArray() == true {
             let previewURLContainer = links.filter { a in
                 return (a["attributes"]?["type"]?.string)! == "audio/x-m4a" }.flatMap {
                     return $0["attributes"]?["href"]

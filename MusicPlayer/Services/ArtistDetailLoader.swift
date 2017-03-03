@@ -1,6 +1,11 @@
 
 import Foundation
 
+precedencegroup OperationPrecendence {
+    associativity: left
+}
+
+infix operator >> : OperationPrecedence
 
 class ArtistDetailLoader {
     
@@ -14,7 +19,7 @@ class ArtistDetailLoader {
     }
     
     
-    func loadArtistDetail(_ completion: (ArtistDetail) -> Void) {
+    func loadArtistDetail(_ completion: @escaping (ArtistDetail) -> Void) {
         
         var data: Data?
         var biographyText: String!
@@ -94,9 +99,8 @@ class ArtistDetailLoader {
         
         dataOperation >> parseBiographyOperation >> parseAlbumNamesOperation >> createArtistOperation
         queue.addOperations([dataOperation, parseBiographyOperation, parseAlbumNamesOperation], waitUntilFinished: false)
-        OperationQueue.main().addOperation(createArtistOperation)
+        OperationQueue.main.addOperation(createArtistOperation)
         
     }
 }
 
-infix operator >> { associativity left precedence 200 }

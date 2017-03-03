@@ -28,7 +28,7 @@ public class AlbumSongListTableViewCell: UITableViewCell {
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = UIColor.clear()
+        backgroundColor = UIColor.clear
         createViews()
         setupConstraints()
     }
@@ -56,7 +56,7 @@ public class AlbumSongListTableViewCell: UITableViewCell {
     }
     
     private func setupConstraints() {
-        let views = ["titleLabel": titleLabel, "playButton": playButton]
+        let views = ["titleLabel": titleLabel, "playButton": playButton] as [String : UIView]
         
         let hFormat = "H:|-[titleLabel]-[playButton(==24)]-|"
         let titleLabelVFormat = "V:|-[titleLabel]-|"

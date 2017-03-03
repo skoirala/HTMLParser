@@ -4,7 +4,7 @@ import UIKit
 
 public class AlbumListViewAdapter: NSObject {
     
-    public init(song: Song, onChange: (Void) -> Void, onSelection: (Album) -> Void) {
+    public init(song: Song, onChange: @escaping (Void) -> Void, onSelection: @escaping  (Album) -> Void) {
         self.onChange = onChange
         self.onSelection = onSelection
         artistDetailLoader = ArtistDetailLoader(song: song)
@@ -16,19 +16,19 @@ public class AlbumListViewAdapter: NSObject {
         }
     }
     
-    private var artistDetail: ArtistDetail? {
+    internal var artistDetail: ArtistDetail? {
         didSet {
             onChange()
         }
     }
     
-    private let onChange: (Void) -> Void
+    internal let onChange: (Void) -> Void
     
-    private let onSelection: (Album) -> Void
+    internal let onSelection: (Album) -> Void
     
-    private var imageDownloader = ImageDownloader()
+    internal var imageDownloader = ImageDownloader()
     
-    private var artistDetailLoader: ArtistDetailLoader!
+    internal var artistDetailLoader: ArtistDetailLoader!
 }
 
 // MARK: UICollectionViewDataSource
@@ -56,22 +56,28 @@ extension AlbumListViewAdapter: UICollectionViewDataSource, UICollectionViewDele
 
 extension AlbumListViewAdapter {
     
-    private func configureCell(_ cell: CollectionViewCell, forCollectionView collectionView: UICollectionView, atIndexPath indexPath: IndexPath) {
+    internal func configureCell(_ cell: CollectionViewCell, forCollectionView collectionView: UICollectionView, atIndexPath indexPath: IndexPath) {
         let albumDetail = artistDetail!.albums[(indexPath as NSIndexPath).item]
         cell.label.text = albumDetail.name
         
         let imageURL =  albumDetail.imageURL
+        
         let image = imageDownloader.imageForURL(imageURL) { [weak self] image in
-            if let cell = collectionView.cellForItem(at: indexPath) as? CollectionViewCell {
-                cell.imageView?.image = image
-            } else {
-                cell.imageView?.image = nil
-            }
+             let cell = collectionView.cellForItem(at: indexPath) as? CollectionViewCell
+             cell?.imageView?.image = image
+                
             if let strongSelf  = self {
-                cell.imageView.layer.add(strongSelf.animationForDownloadedImage(), forKey: nil)
+                cell?.imageView.layer.add(strongSelf.animationForDownloadedImage(), forKey: nil)
+            }
+            
+            if (cell == nil) {
+                collectionView.reloadItems(at: [indexPath])
             }
         }
-        cell.imageView.image = image
+        
+        if image != nil {
+            cell.imageView.image = image
+        }
     }
 
     private func animationForDownloadedImage() -> CAAnimation {

@@ -25,19 +25,19 @@ public class AlbumListViewController: UIViewController {
         listViewAdapter.loadArtistDetail()
     }
     
-    private let imageDownloader = ImageDownloader()
-    private var listViewAdapter: AlbumListViewAdapter!
-    private var listView: TopSongListView!
-    private let song: Song
+    internal let imageDownloader = ImageDownloader()
+    internal var listViewAdapter: AlbumListViewAdapter!
+    internal var listView: TopSongListView!
+    internal let song: Song
     
-    private weak var imageView: UIImageView!
+    internal weak var imageView: UIImageView!
 }
 
 // MARK: Private methods
 
 extension AlbumListViewController {
     
-    private func setupListViewAdapter() {
+    internal func setupListViewAdapter() {
         listViewAdapter = AlbumListViewAdapter(song: song, onChange: {[weak self] in
             self?.listView.reloadData()
             } , onSelection: { [weak self] album in
@@ -48,7 +48,7 @@ extension AlbumListViewController {
         listView.dataSource = listViewAdapter
     }
     
-    private func downloadSongArtwork(){
+    internal func downloadSongArtwork(){
         imageDownloader.imageForURL(song.bigImageURL!) {[weak self] image in
             self?.imageView.image = image
         }
@@ -59,7 +59,7 @@ extension AlbumListViewController {
         navigationController?.pushViewController(artistDetailViewController, animated: true)
     }
     
-    private func createViews() {
+    internal func createViews() {
         let button = UIButton(type: .detailDisclosure)
         button.addTarget(self, action: #selector(showArtistDetail), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView:button)

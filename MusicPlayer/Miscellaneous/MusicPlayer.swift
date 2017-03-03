@@ -11,8 +11,8 @@ public class MusicPlayer: NSObject, ProgressReporting {
         self.delegate = delegate
     }
     
-    override public func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
-        
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+
         if handlePlayerItemStatus(keyPath, object: object, change: change) {
             return
         }
@@ -26,17 +26,17 @@ public class MusicPlayer: NSObject, ProgressReporting {
     
     deinit {
         if let audioPlayerItem = audioPlayerItem {
-            NotificationCenter.default().removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioPlayerItem)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioPlayerItem)
         }
         audioPlayerItem?.removeObserver(self, forKeyPath: "status", context: nil)
         audioPlayerItem?.removeObserver(self, forKeyPath: "duration", context: nil)
     }
    
-    private weak var delegate: MusicPlayerDelegate!
+    internal weak var delegate: MusicPlayerDelegate!
     public var progress: Progress = Progress()
-    private var timeObserver: AnyObject?
-    private var audioPlayer: AVPlayer?
-    private var audioPlayerItem: AVPlayerItem?
+    internal var timeObserver: Any?
+    internal var audioPlayer: AVPlayer?
+    internal var audioPlayerItem: AVPlayerItem?
 
 }
 
@@ -67,10 +67,10 @@ extension MusicPlayer {
 
 extension MusicPlayer {
     
-    private func handlePlayerItemStatus(_ keyPath: String?, object: AnyObject?, change: [NSKeyValueChangeKey: AnyObject]?) -> Bool {
+    internal func handlePlayerItemStatus(_ keyPath: String?, object: Any?, change: [NSKeyValueChangeKey : Any]?) -> Bool {
         
-        if let keyPath = keyPath where keyPath == "status",
-            let playerItem = object as? AVPlayerItem where playerItem == audioPlayerItem {
+        if let keyPath = keyPath, keyPath == "status",
+            let playerItem = object as? AVPlayerItem, playerItem == audioPlayerItem {
             
             let changeStatus = change![NSKeyValueChangeKey.newKey] as! Int
             let keyValueStatus = AVPlayerItemStatus(rawValue: changeStatus)!
@@ -87,9 +87,9 @@ extension MusicPlayer {
         return false
     }
     
-    private func handlePlayerItemDuration(_ keyPath: String?, object: AnyObject?, change: [NSKeyValueChangeKey: AnyObject]?) -> Bool {
-        if let keyPath = keyPath where keyPath == "duration",
-            let playerItem = object as? AVPlayerItem where playerItem == audioPlayerItem {
+    internal func handlePlayerItemDuration(_ keyPath: String?, object: Any?, change: [NSKeyValueChangeKey: Any]?) -> Bool {
+        if let keyPath = keyPath, keyPath == "duration",
+            let playerItem = object as? AVPlayerItem, playerItem == audioPlayerItem {
             
             let durationValue = change![NSKeyValueChangeKey.newKey] as! NSValue
             progress.totalUnitCount = Int64(CMTimeGetSeconds(durationValue.timeValue) * 10000)
@@ -103,12 +103,12 @@ extension MusicPlayer {
 
 extension MusicPlayer {
     
-    private func resetProgress() {
+    internal func resetProgress() {
         progress.totalUnitCount = -1
         progress.completedUnitCount = 0
     }
     
-    private func preparePlayerItem(forURL URLString: String) {
+    internal func preparePlayerItem(forURL URLString: String) {
         removeObservers()
         let URL = Foundation.URL(string: URLString)!
         let asset = AVURLAsset(url: URL)
@@ -116,8 +116,8 @@ extension MusicPlayer {
         addObservers()
     }
     
-    private func addObservers() {
-        NotificationCenter.default().addObserver(self, selector: #selector(MusicPlayer.playerItemFinished), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioPlayerItem)
+    internal func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(MusicPlayer.playerItemFinished), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioPlayerItem)
         audioPlayerItem?.addObserver(self, forKeyPath: "status", options: .new, context: nil)
         audioPlayerItem?.addObserver(self, forKeyPath: "duration", options: .new, context: nil)
         audioPlayer = AVPlayer(playerItem: audioPlayerItem!)
@@ -130,7 +130,7 @@ extension MusicPlayer {
     
     private func removeObservers (){
         if let playerItem = audioPlayerItem {
-            NotificationCenter.default().removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
         }
         audioPlayerItem?.removeObserver(self, forKeyPath: "status", context: nil)
         audioPlayerItem?.removeObserver(self, forKeyPath: "duration", context: nil)

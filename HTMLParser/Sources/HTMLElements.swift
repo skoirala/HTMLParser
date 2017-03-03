@@ -1,7 +1,7 @@
 
 public struct HTMLElements {
     
-    private let node: xmlNodePtr
+    internal let node: xmlNodePtr
     
     init(node: xmlNodePtr) {
         self.node = node

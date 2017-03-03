@@ -24,7 +24,7 @@ public class ArtistDetailViewController: UIViewController {
         setup()
     }
     
-    public override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if  keyPath == "fractionCompleted" {
             guard let fractionCompleted = change?[NSKeyValueChangeKey.newKey] as? Double else {
                 return
@@ -41,16 +41,16 @@ public class ArtistDetailViewController: UIViewController {
         progress.removeObserver(self, forKeyPath: "fractionCompleted")
     }
     
-    private var playPauseButton: PlayPauseButton!
-    private var label: UILabel!
-    private var scrollView: UIScrollView!
-    private var imageView: UIImageView!
+    internal var playPauseButton: PlayPauseButton!
+    internal var label: UILabel!
+    internal var scrollView: UIScrollView!
+    internal var imageView: UIImageView!
     
-    private var progress: Progress!
-    private let song: Song
-    private var player: MusicPlayer!
-    private let imageDownloader = ImageDownloader()
-    private lazy var artistDetailLoader: ArtistDetailLoader = ArtistDetailLoader(song: self.song)
+    internal var progress: Progress!
+    internal let song: Song
+    internal var player: MusicPlayer!
+    internal let imageDownloader = ImageDownloader()
+    internal lazy var artistDetailLoader: ArtistDetailLoader = ArtistDetailLoader(song: self.song)
     
 }
 
@@ -58,7 +58,7 @@ public class ArtistDetailViewController: UIViewController {
 
 extension ArtistDetailViewController {
     
-    private func createViews() {
+    internal func createViews() {
         playPauseButton = PlayPauseButton()
         playPauseButton.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
         playPauseButton.addTarget(self, action: #selector(playPause), for: .touchUpInside)
@@ -74,7 +74,7 @@ extension ArtistDetailViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         label = UILabel()
-        label.textColor = UIColor.darkGray()
+        label.textColor = UIColor.darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -110,8 +110,8 @@ extension ArtistDetailViewController {
         self.imageView = imageView
     }
     
-    private func setup() {
-        view.backgroundColor = UIColor.white()
+    internal func setup() {
+        view.backgroundColor = UIColor.white
         title = song.artistName
         
         downloadMusicArt()
@@ -129,7 +129,7 @@ extension ArtistDetailViewController {
         }
     }
     
-    @objc private func playPause() {
+    @objc internal func playPause() {
         if player.isPlaying {
             playPauseButton.playingState = .paused
             player.pause()
@@ -139,13 +139,13 @@ extension ArtistDetailViewController {
         }
     }
     
-    private func downloadMusicArt() {
+    internal func downloadMusicArt() {
         imageDownloader.imageForURL(song.bigImageURL!) { [weak self] image in
             self?.imageView.image = image
         }
     }
     
-    private func loadArtistDetails() {
+    internal func loadArtistDetails() {
         artistDetailLoader.loadArtistDetail { artistDetail in
             if let biography = artistDetail.biography {
                 self.label.text = biography

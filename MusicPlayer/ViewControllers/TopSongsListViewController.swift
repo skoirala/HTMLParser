@@ -4,8 +4,8 @@ import UIKit
 
 public class TopSongsListViewController: UIViewController {
     
-    private var listViewAdapter: TopSongListViewAdapter!
-    private var listView: TopSongListView!
+    internal var listViewAdapter: TopSongListViewAdapter!
+    internal var listView: TopSongListView!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ public class TopSongsListViewController: UIViewController {
 
 extension TopSongsListViewController {
     
-    private func createViews() {
+    internal func createViews() {
         listView = TopSongListView()
         listView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(listView)
@@ -35,7 +35,7 @@ extension TopSongsListViewController {
         constraints.forEach { $0.isActive = true }
     }
     
-    private func setupListViewAdapter() {
+    internal func setupListViewAdapter() {
         listViewAdapter = TopSongListViewAdapter(onChange: {
             self.listView.reloadData()
             }, selection: { song in
@@ -46,7 +46,7 @@ extension TopSongsListViewController {
         listView.dataSource = listViewAdapter
     }
     
-    private func showAlbumDetail(_ song: Song) {
+    internal func showAlbumDetail(_ song: Song) {
         let songDetailViewController = AlbumListViewController(song: song)
         navigationController?.pushViewController(songDetailViewController, animated: true)
     }

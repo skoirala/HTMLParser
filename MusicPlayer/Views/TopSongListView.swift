@@ -40,7 +40,7 @@ public class TopSongListView: UIView {
     private func createViews() {
         let kGapBetweenBoundaries: CGFloat = 2
         let numberOfColumns: CGFloat = 2
-        let screenWidth = UIScreen.main().bounds.size.width
+        let screenWidth = UIScreen.main.bounds.size.width
         
         
         let gapInBetween: CGFloat = kGapBetweenBoundaries
@@ -58,7 +58,7 @@ public class TopSongListView: UIView {
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: flowLayout)
         collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.ReuseIdentifier)
-        collectionView.backgroundColor = UIColor.clear()
+        collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)
         

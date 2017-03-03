@@ -44,14 +44,14 @@ extension JSON: Collection {
         if value is [AnyObject] {
             return 0
         }
-        fatalError("cannot use collection methods for type \(value.dynamicType)")
+        fatalError("cannot use collection methods for type \(type(of: value))")
     }
     
     public var endIndex: Int {
         if let value = value as? [AnyObject] {
             return value.count
         }
-        fatalError("cannot use collection methods for type \(value.dynamicType)")
+        fatalError("cannot use collection methods for type \(type(of: value))")
     }
     
     public func index(after i: Int) -> Int {
@@ -63,7 +63,7 @@ extension JSON: Collection {
             let item = value[index]
             return JSON(item)
         }
-        fatalError("cannot use collection methods for type \(value.dynamicType)")
+        fatalError("cannot use collection methods for type \(type(of: value))")
     }
     
     

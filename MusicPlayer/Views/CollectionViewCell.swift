@@ -31,7 +31,7 @@ public class CollectionViewCell: UICollectionViewCell {
         
         
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyleCaption2)
+        label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping

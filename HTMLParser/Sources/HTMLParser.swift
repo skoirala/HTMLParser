@@ -3,17 +3,29 @@ import Foundation
 
 public class HTMLParser {
     
-    private let htmlDoc: htmlDocPtr
+    internal let htmlDoc: htmlDocPtr
     
     public init(data: Data) {
-        let bytes = UnsafePointer<Int8>((data as NSData).bytes)
         
-        let options = HTML_PARSE_RECOVER.rawValue | HTML_PARSE_NOERROR.rawValue | HTML_PARSE_NOWARNING.rawValue
-        htmlDoc = htmlReadMemory(bytes,
-                                 Int32(data.count),
+        let bytes = UnsafeMutablePointer<UInt8>.allocate(capacity: data.count)
+        defer { bytes.deallocate(capacity: data.count) }
+        data.copyBytes(to: bytes, count: data.count)
+        let cBuffer = UnsafeRawPointer(bytes).assumingMemoryBound(to: CChar.self)
+        
+
+        let encoding = String.Encoding.utf8
+        let cfEncoding = CFStringConvertNSStringEncodingToEncoding(encoding.rawValue)
+        let cfEncodingAsString: CFString = CFStringConvertEncodingToIANACharSetName(cfEncoding)
+        let cEncoding: UnsafePointer<CChar>? = CFStringGetCStringPtr(cfEncodingAsString, 0)
+        
+
+        let options = CInt(HTML_PARSE_RECOVER.rawValue | HTML_PARSE_NOWARNING.rawValue | HTML_PARSE_NOERROR.rawValue)
+        
+        htmlDoc = htmlReadMemory(cBuffer,
+                                 CInt(data.count),
                                  nil,
-                                 nil,
-                                 Int32(options))
+                                 cEncoding,
+                                 options)
     }
     
     deinit {

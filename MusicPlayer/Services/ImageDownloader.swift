@@ -4,7 +4,7 @@ import UIKit
 public class ImageDownloader {
     
     @discardableResult
-    public func imageForURL(_ URL: String, onDownloadCompletion completion: (UIImage) -> Void) -> UIImage? {
+    public func imageForURL(_ URL: String, onDownloadCompletion completion: @escaping (UIImage) -> Void) -> UIImage? {
         let image = downloadedImages[URL]
         
         if image == nil {
@@ -13,7 +13,7 @@ public class ImageDownloader {
         return image
     }
     
-    public func downloadImageForURL(_ URL: String, completion: (UIImage) -> Void) {
+    public func downloadImageForURL(_ URL: String, completion: @escaping (UIImage) -> Void) {
         precondition(downloadedImages[URL] == nil, "already downloaded image")
         
         if  downloadingImages.contains(URL) {
@@ -24,7 +24,7 @@ public class ImageDownloader {
         
         imageDownloadQueue.async { [weak self] in
             if let data = try? Data(contentsOf: Foundation.URL(string: URL)!),
-                image = UIImage(data: data) {
+                let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     if let indexOfDownloading = self?.downloadingImages.index(of: URL) {
                         self?.downloadingImages.remove(at: indexOfDownloading)
@@ -37,7 +37,9 @@ public class ImageDownloader {
         }
     }
     
-    private let imageDownloadQueue = DispatchQueue(label: "com.imagerepository.queue", attributes: DispatchQueueAttributes.serial)
+    
+    
+    private let imageDownloadQueue = DispatchQueue(label: "com.imagerepository.queue")
     private var downloadedImages: [String: UIImage] = [:]
     private var downloadingImages:[String] = []
 }

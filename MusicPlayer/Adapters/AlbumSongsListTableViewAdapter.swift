@@ -23,7 +23,7 @@ public class AlbumSongsListTableViewAdapter: NSObject {
         progress.removeObserver(self, forKeyPath: "fractionCompleted")
     }
     
-    public override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if  keyPath == "fractionCompleted" {
             guard let fractionCompleted = change?[NSKeyValueChangeKey.newKey] as? Double else {
                 return
@@ -35,12 +35,12 @@ public class AlbumSongsListTableViewAdapter: NSObject {
         super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
     }
     
-    private let progress = Progress()
-    private var albumDetailLoader: AlbumDetailLoader!
-    private lazy var musicPlayer: MusicPlayer = MusicPlayer(delegate: self)
-    private var albums: [AlbumDetail] = []
-    private var playingIndexPath: IndexPath?
-    weak private var tableView: UITableView!
+    internal let progress = Progress()
+    internal var albumDetailLoader: AlbumDetailLoader!
+    internal lazy var musicPlayer: MusicPlayer = MusicPlayer(delegate: self)
+    internal var albums: [AlbumDetail] = []
+    internal var playingIndexPath: IndexPath?
+    weak internal var tableView: UITableView!
 }
 
 // MARK: UITableViewDatSource
@@ -77,7 +77,7 @@ extension AlbumSongsListTableViewAdapter: UITableViewDelegate {
 
 extension AlbumSongsListTableViewAdapter {
     
-    private func setup() {
+    internal func setup() {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         progress.totalUnitCount = 100
@@ -85,10 +85,10 @@ extension AlbumSongsListTableViewAdapter {
         progress.addObserver(self, forKeyPath: "fractionCompleted", options: .new, context: nil)
     }
     
-    private func configureCell(_ cell: AlbumSongListTableViewCell, atIndexPath indexPath:IndexPath) {
+    internal func configureCell(_ cell: AlbumSongListTableViewCell, atIndexPath indexPath:IndexPath) {
         cell.titleLabel.text = albums[(indexPath as NSIndexPath).row].name
        
-        if let playingIndexPath = playingIndexPath where playingIndexPath == indexPath {
+        if let playingIndexPath = playingIndexPath, playingIndexPath == indexPath {
             if musicPlayer.isPlaying {
                 cell.setPlaying()
             } else {
@@ -102,14 +102,14 @@ extension AlbumSongsListTableViewAdapter {
         addPlayButtonEventHandlerToCell(cell, atIndexPath: indexPath)
     }
     
-    private func addPlayButtonEventHandlerToCell(_ cell: AlbumSongListTableViewCell, atIndexPath indexPath: IndexPath) {
+    internal func addPlayButtonEventHandlerToCell(_ cell: AlbumSongListTableViewCell, atIndexPath indexPath: IndexPath) {
         cell.onPlayButtonTapped = { [weak self] in
             self?.playPauseItemAtIndexPath(indexPath)
         }
     }
     
-    private func playPauseItemAtIndexPath(_ indexPath: IndexPath) {
-        if let playingIndexPath = playingIndexPath where playingIndexPath == indexPath {
+    internal func playPauseItemAtIndexPath(_ indexPath: IndexPath) {
+        if let playingIndexPath = playingIndexPath, playingIndexPath == indexPath {
             togglePlayAtIndexPath(indexPath)
             return
         }
@@ -123,19 +123,19 @@ extension AlbumSongsListTableViewAdapter {
         playingIndexPath = indexPath
     }
     
-    private func updateProgressForPlayingItem(_ progress: CGFloat) {
-        if let playingIndexPath = playingIndexPath, cell = tableView.cellForRow(at: playingIndexPath)
+    internal func updateProgressForPlayingItem(_ progress: CGFloat) {
+        if let playingIndexPath = playingIndexPath, let cell = tableView.cellForRow(at: playingIndexPath)
             as? AlbumSongListTableViewCell {
             cell.updateProgress(progress)
         }
     }
     
-    private func playSampleAtIndexPath(_ indexPath: IndexPath) {
+    internal func playSampleAtIndexPath(_ indexPath: IndexPath) {
         musicPlayer.prepareToPlayURL(albums[(indexPath as NSIndexPath).row].previewURL)
         musicPlayer.play()
     }
     
-    private func updatePlayingAtIndexPath(_ indexPath: IndexPath) {
+    internal func updatePlayingAtIndexPath(_ indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? AlbumSongListTableViewCell else {
             return
         }
@@ -143,7 +143,7 @@ extension AlbumSongsListTableViewAdapter {
         cell.updateProgress(0)
     }
     
-    private func resetPlayingAtIndexPath(_ indexPath: IndexPath) {
+    internal func resetPlayingAtIndexPath(_ indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? AlbumSongListTableViewCell else {
             return
         }
@@ -151,7 +151,7 @@ extension AlbumSongsListTableViewAdapter {
         cell.updateProgress(0)
     }
     
-    private func togglePlayAtIndexPath(_ indexPath: IndexPath) {
+    internal func togglePlayAtIndexPath(_ indexPath: IndexPath) {
         if musicPlayer.isPlaying {
             musicPlayer.pause()
             resetPlayingAtIndexPath(indexPath)

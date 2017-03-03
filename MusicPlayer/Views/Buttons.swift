@@ -46,7 +46,7 @@ public class PlayPauseButton: UIButton {
         
         outlineLayer.fillColor = nil
         outlineLayer.lineWidth = LineWidth
-        outlineLayer.strokeColor = UIColor.lightGray().cgColor
+        outlineLayer.strokeColor = UIColor.lightGray.cgColor
         
         progressLayer.fillColor = nil
         progressLayer.lineCap = kCALineCapRound

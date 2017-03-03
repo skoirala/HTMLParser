@@ -14,11 +14,11 @@ public class JSONNetworkRequest {
         guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
             return (nil, "JSON conversion failed")
         }
-        return (JSON(jsonObject), nil)
+        return (JSON(jsonObject as AnyObject), nil)
     }
     
-    public func startWithCompletion(_ completion: (Result<JSON>) -> Void) {
-        let session = URLSession.shared()
+    public func startWithCompletion(_ completion: @escaping (Result<JSON>) -> Void) {
+        let session = URLSession.shared
         task = session.dataTask(with: url) { data, response, error in
             
             guard let data = data else {
@@ -26,7 +26,7 @@ public class JSONNetworkRequest {
                 return
             }
             
-            if  let response = response as? HTTPURLResponse where response.statusCode > 200 {
+            if  let response = response as? HTTPURLResponse, response.statusCode > 200 {
                 completion(Result.failure("Unexpected status code"))
                 return
             }
@@ -34,7 +34,7 @@ public class JSONNetworkRequest {
             
             DispatchQueue.main.async {
                 if let object = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-                completion(Result.success(JSON(object)))
+                completion(Result.success(JSON(object as AnyObject)))
                 } else {
                     completion(Result.failure("Unexpected error occurred"))
                 }
