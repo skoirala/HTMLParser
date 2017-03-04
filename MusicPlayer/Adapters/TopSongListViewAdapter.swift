@@ -10,9 +10,9 @@ public class TopSongListViewAdapter: NSObject {
         self.onSelection = selection
     }
     
-    public func loadTopSongs(_ completion: ((Void) -> Void)? = nil) {
+    public func loadTopSongs(countryIdentifier: String, _ completion: ((Void) -> Void)? = nil) {
         
-        topSongRequest = TopSongsRequest(limit: 100)
+        topSongRequest = TopSongsRequest(countryIdentifier: countryIdentifier, limit: 100)
         
         topSongRequest.startWithCompletion { result in
             completion?()

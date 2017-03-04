@@ -2,17 +2,14 @@
 import Foundation
 
 public class TopSongsRequest {
-    private lazy var iTunesTopSongsRequestURL: URL = {
-        return URL(string: "https://itunes.apple.com/us/rss/topsongs/limit=\(self.limit)/json")!
-    }()
+    let URLFormat = "https://itunes.apple.com/%@/rss/topsongs/limit=%d/json"
     
-    private let limit: Int
     
     private var jsonRequest: JSONNetworkRequest!
         
-    public init(limit: Int) {
-        self.limit = limit
-        jsonRequest = JSONNetworkRequest(url:iTunesTopSongsRequestURL)
+    public init(countryIdentifier: String, limit: Int) {
+        let url = URL(string:String(format: URLFormat, countryIdentifier, limit))!
+        jsonRequest = JSONNetworkRequest(url:url)
     }
     
     public func startWithCompletion(_ completion: @escaping (Result<[Song]>) -> Void) {

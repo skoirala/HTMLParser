@@ -29,7 +29,7 @@ public class AlbumSongsListViewController: UITableViewController {
         
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
 
         let blurEffect = UIBlurEffect(style: .extraLight)
         let blurredView = UIVisualEffectView(effect: blurEffect)

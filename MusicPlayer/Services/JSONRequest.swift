@@ -10,6 +10,8 @@ public class JSONNetworkRequest {
         self.url = url
     }
     
+    private var cancelled = false
+    
     func convertToJSON(_ data: Data) -> (JSON?, String?) {
         guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
             return (nil, "JSON conversion failed")
@@ -19,7 +21,16 @@ public class JSONNetworkRequest {
     
     public func startWithCompletion(_ completion: @escaping (Result<JSON>) -> Void) {
         let session = URLSession.shared
-        task = session.dataTask(with: url) { data, response, error in
+        cancelled = false
+        
+        task = session.dataTask(with: url) { [weak self] data, response, error in
+            if (self == nil) {
+                return
+            }
+            
+            if self?.cancelled == true {
+                return
+            }
             
             guard let data = data else {
                 completion(Result.failure(error!.localizedDescription))
@@ -33,6 +44,7 @@ public class JSONNetworkRequest {
             
             
             DispatchQueue.main.async {
+                
                 if let object = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
                 completion(Result.success(JSON(object as AnyObject)))
                 } else {
@@ -41,6 +53,11 @@ public class JSONNetworkRequest {
             }
         }
         task.resume()
+    }
+    
+    public func cancel() {
+        cancelled = true
+        task.cancel()
     }
     
    

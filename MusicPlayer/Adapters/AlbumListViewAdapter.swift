@@ -63,6 +63,10 @@ extension AlbumListViewAdapter {
         let imageURL =  albumDetail.imageURL
         
         let image = imageDownloader.imageForURL(imageURL) { [weak self] image in
+            if self == nil {
+                return
+            }
+            
              let cell = collectionView.cellForItem(at: indexPath) as? CollectionViewCell
              cell?.imageView?.image = image
                 

@@ -67,7 +67,7 @@ extension ArtistDetailViewController {
         
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         view.addSubview(imageView)
         
         scrollView = UIScrollView()

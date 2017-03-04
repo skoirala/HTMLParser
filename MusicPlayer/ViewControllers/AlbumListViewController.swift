@@ -65,7 +65,7 @@ extension AlbumListViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView:button)
 
         let imageView = UIImageView(frame: .zero)
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
         

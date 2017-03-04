@@ -6,6 +6,9 @@ public class TopSongsListViewController: UIViewController {
     
     internal var listViewAdapter: TopSongListViewAdapter!
     internal var listView: TopSongListView!
+    internal var countrySelectionButton: UIBarButtonItem!
+    var selectedCountry = "USA"
+
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,7 +17,7 @@ public class TopSongsListViewController: UIViewController {
 
         createViews()
         setupListViewAdapter()
-        listViewAdapter.loadTopSongs()
+        listViewAdapter.loadTopSongs(countryIdentifier: Countries[selectedCountry]!)
     }
 }
 
@@ -23,6 +26,12 @@ public class TopSongsListViewController: UIViewController {
 extension TopSongsListViewController {
     
     internal func createViews() {
+        countrySelectionButton = UIBarButtonItem(title: "Country",
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(countrySelectionButtonTapped))
+        navigationItem.rightBarButtonItem = countrySelectionButton
+        
         listView = TopSongListView()
         listView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(listView)
@@ -34,6 +43,19 @@ extension TopSongsListViewController {
         ]
         constraints.forEach { $0.isActive = true }
     }
+    
+    @objc private func countrySelectionButtonTapped() {
+        let countrySelectionViewController = CountrySelectionPopupViewController(selectedCountry: selectedCountry, selection: { [weak self] country in
+            self?.selectedCountry = country
+            self?.listViewAdapter.reset()
+            self?.listView.reloadData()
+            self?.listViewAdapter.loadTopSongs(countryIdentifier: Countries[self!.selectedCountry]!)
+        })
+            
+        countrySelectionViewController.popoverPresentationController?.barButtonItem = countrySelectionButton
+        present(countrySelectionViewController, animated: true)
+    }
+    
     
     internal func setupListViewAdapter() {
         listViewAdapter = TopSongListViewAdapter(onChange: {
@@ -51,4 +73,3 @@ extension TopSongsListViewController {
         navigationController?.pushViewController(songDetailViewController, animated: true)
     }
 }
-

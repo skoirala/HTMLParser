@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C14187C1E6A43440094AA59 /* CountrySelectionPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C14187B1E6A43440094AA59 /* CountrySelectionPopupViewController.swift */; };
+		2C14187E1E6A43780094AA59 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C14187D1E6A43780094AA59 /* Countries.swift */; };
 		2C7E143B1C9CA5CD0020197E /* HTMLElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E14361C9CA5CD0020197E /* HTMLElement.swift */; };
 		2C7E143C1C9CA5CD0020197E /* HTMLElementGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E14371C9CA5CD0020197E /* HTMLElementGenerator.swift */; };
 		2C7E143D1C9CA5CD0020197E /* HTMLElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E14381C9CA5CD0020197E /* HTMLElements.swift */; };
@@ -67,6 +69,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C14187B1E6A43440094AA59 /* CountrySelectionPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySelectionPopupViewController.swift; sourceTree = "<group>"; };
+		2C14187D1E6A43780094AA59 /* Countries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		2C7E14361C9CA5CD0020197E /* HTMLElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLElement.swift; sourceTree = "<group>"; };
 		2C7E14371C9CA5CD0020197E /* HTMLElementGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLElementGenerator.swift; sourceTree = "<group>"; };
 		2C7E14381C9CA5CD0020197E /* HTMLElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLElements.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				2C7F34001C9B98520016154B /* AlbumSongsListViewController.swift */,
 				2C7F34011C9B98520016154B /* ArtistDetailViewController.swift */,
 				2C7F34021C9B98520016154B /* TopSongsListViewController.swift */,
+				2C14187B1E6A43440094AA59 /* CountrySelectionPopupViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -258,6 +263,7 @@
 				2C7F33F71C9B98520016154B /* Services */,
 				2C7F33FE1C9B98520016154B /* ViewControllers */,
 				2C7F34031C9B98520016154B /* Views */,
+				2C14187D1E6A43780094AA59 /* Countries.swift */,
 			);
 			path = MusicPlayer;
 			sourceTree = "<group>";
@@ -392,11 +398,13 @@
 				2C7F340A1C9B98520016154B /* TopSongListViewAdapter.swift in Sources */,
 				2C7F34201C9B98520016154B /* JSONRequest.swift in Sources */,
 				2C7F34121C9B98520016154B /* Operators.swift in Sources */,
+				2C14187C1E6A43440094AA59 /* CountrySelectionPopupViewController.swift in Sources */,
 				2C7F34211C9B98520016154B /* TopSongsRequest.swift in Sources */,
 				2C7F34151C9B98520016154B /* AlbumDetail.swift in Sources */,
 				2C7F34281C9B98520016154B /* CollectionViewCell.swift in Sources */,
 				2C7E143F1C9CA5CD0020197E /* xmlNode+Attributes.swift in Sources */,
 				2C7F34231C9B98520016154B /* AlbumSongsListViewController.swift in Sources */,
+				2C14187E1E6A43780094AA59 /* Countries.swift in Sources */,
 				2C7F341F1C9B98520016154B /* JSON.swift in Sources */,
 				2C7E143D1C9CA5CD0020197E /* HTMLElements.swift in Sources */,
 				2C7F34181C9B98520016154B /* Song.swift in Sources */,
