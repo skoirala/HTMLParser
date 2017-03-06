@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2C14187C1E6A43440094AA59 /* CountrySelectionPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C14187B1E6A43440094AA59 /* CountrySelectionPopupViewController.swift */; };
 		2C14187E1E6A43780094AA59 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C14187D1E6A43780094AA59 /* Countries.swift */; };
+		2C1418801E6B11670094AA59 /* ADSense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C14187F1E6B11670094AA59 /* ADSense.framework */; };
+		2C1418811E6B11670094AA59 /* ADSense.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C14187F1E6B11670094AA59 /* ADSense.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2C1418851E6BA0FD0094AA59 /* ADContainerCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1418841E6BA0FD0094AA59 /* ADContainerCollectionReusableView.swift */; };
 		2C7E143B1C9CA5CD0020197E /* HTMLElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E14361C9CA5CD0020197E /* HTMLElement.swift */; };
 		2C7E143C1C9CA5CD0020197E /* HTMLElementGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E14371C9CA5CD0020197E /* HTMLElementGenerator.swift */; };
 		2C7E143D1C9CA5CD0020197E /* HTMLElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E14381C9CA5CD0020197E /* HTMLElements.swift */; };
@@ -42,6 +45,7 @@
 		2C7F34271C9B98520016154B /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7F34051C9B98520016154B /* Buttons.swift */; };
 		2C7F34281C9B98520016154B /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7F34061C9B98520016154B /* CollectionViewCell.swift */; };
 		2C7F34291C9B98520016154B /* TopSongListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7F34071C9B98520016154B /* TopSongListView.swift */; };
+		2CC4854D1E6D5BD900BB045C /* ADContainerTableReuseableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC4854C1E6D5BD900BB045C /* ADContainerTableReuseableView.swift */; };
 		2CDF91BA1C921CBE0060B95A /* MusicPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDF91B91C921CBE0060B95A /* MusicPlayerTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +66,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2C1418811E6B11670094AA59 /* ADSense.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,6 +76,8 @@
 /* Begin PBXFileReference section */
 		2C14187B1E6A43440094AA59 /* CountrySelectionPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySelectionPopupViewController.swift; sourceTree = "<group>"; };
 		2C14187D1E6A43780094AA59 /* Countries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
+		2C14187F1E6B11670094AA59 /* ADSense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ADSense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C1418841E6BA0FD0094AA59 /* ADContainerCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADContainerCollectionReusableView.swift; sourceTree = "<group>"; };
 		2C7E14361C9CA5CD0020197E /* HTMLElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLElement.swift; sourceTree = "<group>"; };
 		2C7E14371C9CA5CD0020197E /* HTMLElementGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLElementGenerator.swift; sourceTree = "<group>"; };
 		2C7E14381C9CA5CD0020197E /* HTMLElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLElements.swift; sourceTree = "<group>"; };
@@ -104,6 +111,7 @@
 		2C7F34051C9B98520016154B /* Buttons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		2C7F34061C9B98520016154B /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		2C7F34071C9B98520016154B /* TopSongListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopSongListView.swift; sourceTree = "<group>"; };
+		2CC4854C1E6D5BD900BB045C /* ADContainerTableReuseableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADContainerTableReuseableView.swift; sourceTree = "<group>"; };
 		2CDF91A11C921CBE0060B95A /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CDF91B51C921CBE0060B95A /* MusicPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CDF91B91C921CBE0060B95A /* MusicPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerTests.swift; sourceTree = "<group>"; };
@@ -115,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1418801E6B11670094AA59 /* ADSense.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,6 +238,8 @@
 				2C7F34051C9B98520016154B /* Buttons.swift */,
 				2C7F34061C9B98520016154B /* CollectionViewCell.swift */,
 				2C7F34071C9B98520016154B /* TopSongListView.swift */,
+				2C1418841E6BA0FD0094AA59 /* ADContainerCollectionReusableView.swift */,
+				2CC4854C1E6D5BD900BB045C /* ADContainerTableReuseableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -236,6 +247,7 @@
 		2CDF91981C921CBE0060B95A = {
 			isa = PBXGroup;
 			children = (
+				2C14187F1E6B11670094AA59 /* ADSense.framework */,
 				2CDF91A31C921CBE0060B95A /* MusicPlayer */,
 				2CDF91B81C921CBE0060B95A /* MusicPlayerTests */,
 				2CDF91A21C921CBE0060B95A /* Products */,
@@ -328,9 +340,14 @@
 				TargetAttributes = {
 					2CDF91A01C921CBE0060B95A = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = R4Z677ZZQA;
+						DevelopmentTeam = 55X64MAG7P;
 						DevelopmentTeamName = "Sandeep Koirala";
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					2CDF91B41C921CBE0060B95A = {
 						CreatedOnToolsVersion = 7.3;
@@ -381,6 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CC4854D1E6D5BD900BB045C /* ADContainerTableReuseableView.swift in Sources */,
 				2C7F34261C9B98520016154B /* AlbumSongListTableViewCell.swift in Sources */,
 				2C7F34141C9B98520016154B /* Album.swift in Sources */,
 				2C7E143C1C9CA5CD0020197E /* HTMLElementGenerator.swift in Sources */,
@@ -410,6 +428,7 @@
 				2C7F34181C9B98520016154B /* Song.swift in Sources */,
 				2C7F341C1C9B98520016154B /* AlbumDetailLoader.swift in Sources */,
 				2C7F34241C9B98520016154B /* ArtistDetailViewController.swift in Sources */,
+				2C1418851E6BA0FD0094AA59 /* ADContainerCollectionReusableView.swift in Sources */,
 				2C7F34271C9B98520016154B /* Buttons.swift in Sources */,
 				2C7F34291C9B98520016154B /* TopSongListView.swift in Sources */,
 				2C7F34111C9B98520016154B /* MusicPlayer.swift in Sources */,
@@ -493,6 +512,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				DEVELOPMENT_TEAM = 55X64MAG7P;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = MusicPlayer/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -561,6 +581,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				DEVELOPMENT_TEAM = 55X64MAG7P;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = MusicPlayer/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

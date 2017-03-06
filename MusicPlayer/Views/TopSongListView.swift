@@ -36,6 +36,11 @@ public class TopSongListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func setHeaderSize(size: CGSize) {
+        let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        flowLayout.headerReferenceSize = size
+    }
+    
     
     private func createViews() {
         let kGapBetweenBoundaries: CGFloat = 2
@@ -44,7 +49,7 @@ public class TopSongListView: UIView {
         
         
         let gapInBetween: CGFloat = kGapBetweenBoundaries
-        let sectionInset = UIEdgeInsets(top: kGapBetweenBoundaries, left: kGapBetweenBoundaries, bottom: kGapBetweenBoundaries, right: kGapBetweenBoundaries)
+        let sectionInset = UIEdgeInsets(top: 0, left: kGapBetweenBoundaries, bottom: kGapBetweenBoundaries, right: kGapBetweenBoundaries)
         let lineSpacing = kGapBetweenBoundaries
         
         let widthOfItem = (screenWidth - (numberOfColumns - 1) * gapInBetween - sectionInset.left - sectionInset.right) / numberOfColumns
@@ -58,6 +63,7 @@ public class TopSongListView: UIView {
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: flowLayout)
         collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.ReuseIdentifier)
+        collectionView.register(ADContainerCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: ADContainerCollectionReusableView.ReuseIdentifier)
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)

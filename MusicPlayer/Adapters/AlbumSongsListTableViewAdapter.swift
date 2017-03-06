@@ -4,6 +4,13 @@ import UIKit
 
 public class AlbumSongsListTableViewAdapter: NSObject {
 
+    var headerViewHeight: CGFloat = 0
+    var headerView: UIView?
+    
+    func reloadView() {
+        tableView.reloadData()
+    }
+    
     public func loadAlbumDetail() {
         albumDetailLoader.loadAlbumDetail { [weak self] albums in
             self?.albums = albums
@@ -14,6 +21,7 @@ public class AlbumSongsListTableViewAdapter: NSObject {
     public init(album:Album, tableView: UITableView) {
         super.init()
         tableView.register(AlbumSongListTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(ADContainerTableReuseableView.self, forHeaderFooterViewReuseIdentifier: ADContainerTableReuseableView.ReuseIdentifier)
         albumDetailLoader = AlbumDetailLoader(album: album)
         self.tableView = tableView
         setup()
@@ -59,6 +67,23 @@ extension AlbumSongsListTableViewAdapter: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! AlbumSongListTableViewCell
         configureCell(cell, atIndexPath: indexPath)
         return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if let headerView = headerView {
+            let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: ADContainerTableReuseableView.ReuseIdentifier) as! ADContainerTableReuseableView
+            cell.showView(view:headerView)
+            return cell
+        }
+        return nil
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    public func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return headerViewHeight
     }
 
 }

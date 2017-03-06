@@ -2,8 +2,9 @@
 
 import UIKit
 
-
 public class TopSongListViewAdapter: NSObject {
+    
+    public var headerView: UIView?
     
     public init(onChange: @escaping (Void) -> Void, selection: @escaping (Song) -> Void) {
         self.onChange = onChange
@@ -12,7 +13,7 @@ public class TopSongListViewAdapter: NSObject {
     
     public func loadTopSongs(countryIdentifier: String, _ completion: ((Void) -> Void)? = nil) {
         
-        topSongRequest = TopSongsRequest(countryIdentifier: countryIdentifier, limit: 100)
+        topSongRequest = TopSongsRequest(countryIdentifier: countryIdentifier, limit: 16)
         
         topSongRequest.startWithCompletion { result in
             completion?()
@@ -59,6 +60,15 @@ extension TopSongListViewAdapter: UICollectionViewDataSource, UICollectionViewDe
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelection(songs[(indexPath as NSIndexPath).item])
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionElementKindSectionHeader  && headerView != nil {
+            let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ADContainerCollectionReusableView.ReuseIdentifier, for: indexPath) as! ADContainerCollectionReusableView
+            supplementaryView.showView(view: headerView!)
+            return supplementaryView
+        }
+        return UICollectionReusableView()
     }
 }
 

@@ -1,8 +1,12 @@
 
 import UIKit
 
+import ADSense
 
-public class AlbumSongsListViewController: UITableViewController {
+
+public class AlbumSongsListViewController: UITableViewController, ADSpaceViewDelegate {
+    
+    var adSense: ADSpaceView!
     
     public init(album: Album) {
         self.album = album
@@ -22,6 +26,33 @@ public class AlbumSongsListViewController: UITableViewController {
         imageDownloader.downloadImageForURL(album.imageURL) { [weak self] image in
             self?.imageView.image = image
         }
+        
+        adSense = ADSpaceView(token: "")
+        adSense.delegate = self
+
+        adSense.load(request: ADSpaceRequest(adType: .FullScreen){ [weak self] in
+            self?.closeAd()
+        })
+    }
+    
+    public func adSpaceViewWillLoad(adSpaceView: ADSpaceView) {
+        
+    }
+    
+    public func adSpaceViewDidLoad(adSpaceView: ADSpaceView) {
+        albumListTableViewAdapter.headerViewHeight = adSpaceView.size.height
+        albumListTableViewAdapter.headerView = adSpaceView
+        albumListTableViewAdapter.reloadView()
+    }
+    
+    public func adSpaceView(adSpaceView: ADSpaceView, didFailWithError error: Error) {
+        
+    }
+    
+    private func closeAd() {
+        albumListTableViewAdapter.headerViewHeight = 0
+        albumListTableViewAdapter.headerView = nil
+        albumListTableViewAdapter.reloadView()
     }
     
     private func createViews() {

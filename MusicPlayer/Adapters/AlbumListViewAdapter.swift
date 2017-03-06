@@ -22,6 +22,8 @@ public class AlbumListViewAdapter: NSObject {
         }
     }
     
+    public var headerView: UIView?
+
     internal let onChange: (Void) -> Void
     
     internal let onSelection: (Album) -> Void
@@ -49,6 +51,15 @@ extension AlbumListViewAdapter: UICollectionViewDataSource, UICollectionViewDele
         if let album = artistDetail?.albums[(indexPath as NSIndexPath).item] {
             onSelection(album)
         }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionElementKindSectionHeader  && headerView != nil {
+            let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ADContainerCollectionReusableView.ReuseIdentifier, for: indexPath) as! ADContainerCollectionReusableView
+            supplementaryView.showView(view: headerView!)
+            return supplementaryView
+        }
+        return UICollectionReusableView()
     }
 }
 

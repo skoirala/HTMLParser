@@ -1,11 +1,15 @@
 
 import UIKit
 
+import ADSense
 
-public class AlbumListViewController: UIViewController {
+
+public class AlbumListViewController: UIViewController, ADSpaceViewDelegate {
     
+    var adSpaceView: ADSpaceView!
+
     public init(song: Song) {
-        self.song = song
+        self.song = song        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -23,7 +27,42 @@ public class AlbumListViewController: UIViewController {
         downloadSongArtwork()
         
         listViewAdapter.loadArtistDetail()
+        
+        adSpaceView = ADSpaceView(token: "")
+        adSpaceView.load(request: ADSpaceRequest(adType:.Inline) { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.closeAdSpace()
+        })
+            
+        adSpaceView.delegate = self
+        
     }
+    
+    public func adSpaceViewWillLoad(adSpaceView: ADSpaceView) {
+        print("Will load ad")
+    }
+    
+    public func adSpaceViewDidLoad(adSpaceView: ADSpaceView) {
+        let randomTime = Int(arc4random_uniform(4))
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(randomTime)) {
+            self.listViewAdapter.headerView = adSpaceView
+            self.listView.setHeaderSize(size: adSpaceView.size)
+            self.listView.reloadData()
+        }
+    }
+    
+    func closeAdSpace() {
+        UIView.animate(withDuration: 0.5) { 
+            self.listViewAdapter.headerView = nil
+            self.listView.setHeaderSize(size: .zero)
+            self.listView.reloadData()
+        }
+    }
+    
+    public func adSpaceView(adSpaceView: ADSpaceView, didFailWithError error: Error) {
+        print("Failed with error \(error)")
+    }
+
     
     internal let imageDownloader = ImageDownloader()
     internal var listViewAdapter: AlbumListViewAdapter!

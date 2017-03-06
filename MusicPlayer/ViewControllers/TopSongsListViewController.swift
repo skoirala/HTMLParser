@@ -1,14 +1,17 @@
 
 import UIKit
 
+import ADSense
 
-public class TopSongsListViewController: UIViewController {
+
+public class TopSongsListViewController: UIViewController, ADSpaceViewDelegate {
     
     internal var listViewAdapter: TopSongListViewAdapter!
     internal var listView: TopSongListView!
     internal var countrySelectionButton: UIBarButtonItem!
     var selectedCountry = "USA"
-
+    
+    var adSpaceView: ADSpaceView!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +21,40 @@ public class TopSongsListViewController: UIViewController {
         createViews()
         setupListViewAdapter()
         listViewAdapter.loadTopSongs(countryIdentifier: Countries[selectedCountry]!)
+        
+        adSpaceView = ADSpaceView(token: "")
+        adSpaceView.delegate = self
+        adSpaceView.load(request: ADSpaceRequest(adType:.Banner) { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.closeAdSpace()
+        })
+
     }
+    
+    public func adSpaceViewWillLoad(adSpaceView: ADSpaceView) {
+        print("Will load ad")
+    }
+    
+    public func adSpaceViewDidLoad(adSpaceView: ADSpaceView) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            self.listViewAdapter.headerView = adSpaceView
+            self.listView.setHeaderSize(size: adSpaceView.size)
+            self.listView.reloadData()
+        }
+    }
+    
+    public func adSpaceView(adSpaceView: ADSpaceView, didFailWithError error: Error) {
+        print("Failed with error \(error)")
+    }
+    
+    func closeAdSpace() {
+        UIView.animate(withDuration: 0.5) {
+            self.listViewAdapter.headerView = nil
+            self.listView.setHeaderSize(size: .zero)
+            self.listView.reloadData()
+        }
+    }
+
 }
 
 // MARK: Private methods
@@ -26,6 +62,7 @@ public class TopSongsListViewController: UIViewController {
 extension TopSongsListViewController {
     
     internal func createViews() {
+        
         countrySelectionButton = UIBarButtonItem(title: "Country",
                                                  style: .plain,
                                                  target: self,
