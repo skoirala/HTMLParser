@@ -4,7 +4,7 @@ import UIKit
 
 public class TopSongListViewAdapter: NSObject {
     
-    public var headerView: UIView?
+    weak public var headerView: UIView?
     
     public init(onChange: @escaping (Void) -> Void, selection: @escaping (Song) -> Void) {
         self.onChange = onChange
@@ -15,13 +15,15 @@ public class TopSongListViewAdapter: NSObject {
         
         topSongRequest = TopSongsRequest(countryIdentifier: countryIdentifier, limit: 16)
         
-        topSongRequest.startWithCompletion { result in
-            completion?()
+        topSongRequest.startWithCompletion {  [weak self] result in
+            if self == nil {
+                return
+            }
             switch result {
             case let .success(results):
-                self.songs = results
+                self?.songs = results
             case let .failure(message):
-                self.showError(message)
+                self?.showError(message)
             }
         }
     }

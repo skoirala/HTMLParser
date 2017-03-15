@@ -4,7 +4,11 @@ import UIKit
 public class ADContainerCollectionReusableView: UICollectionReusableView {
     public static let ReuseIdentifier = "ReuseIdentifier"
 
-    var containedView: UIView?
+    weak var containedView: UIView?
+    
+    deinit {
+        containedView?.removeFromSuperview()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

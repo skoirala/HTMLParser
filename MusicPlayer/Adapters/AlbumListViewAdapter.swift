@@ -22,7 +22,7 @@ public class AlbumListViewAdapter: NSObject {
         }
     }
     
-    public var headerView: UIView?
+    weak public var headerView: UIView?
 
     internal let onChange: (Void) -> Void
     

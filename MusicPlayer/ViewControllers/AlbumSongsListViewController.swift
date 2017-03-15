@@ -4,9 +4,9 @@ import UIKit
 import ADSense
 
 
-public class AlbumSongsListViewController: UITableViewController, ADSpaceViewDelegate {
+public class AlbumSongsListViewController: UITableViewController, ADSpaceDelegate {
     
-    var adSense: ADSpaceView!
+    var adSpace: ADSpace!
     
     public init(album: Album) {
         self.album = album
@@ -27,32 +27,34 @@ public class AlbumSongsListViewController: UITableViewController, ADSpaceViewDel
             self?.imageView.image = image
         }
         
-        adSense = ADSpaceView(token: "")
-        adSense.delegate = self
-
-        adSense.load(request: ADSpaceRequest(adType: .FullScreen){ [weak self] in
-            self?.closeAd()
-        })
+        adSpace = ADSpace()
+        adSpace.delegate = self
+        adSpace.load(adType: .banner)
     }
     
-    public func adSpaceViewWillLoad(adSpaceView: ADSpaceView) {
+    public func adSpaceWillLoad(adSpace: ADSpace) {
         
     }
     
-    public func adSpaceViewDidLoad(adSpaceView: ADSpaceView) {
-        albumListTableViewAdapter.headerViewHeight = adSpaceView.size.height
-        albumListTableViewAdapter.headerView = adSpaceView
+    public func adSpace(adSpace: ADSpace, willCloseView view: UIView) {
+        
+    }
+    
+    public func adSpace(adSpace: ADSpace, didLoadView view: UIView, contentSize: CGSize) {
+        albumListTableViewAdapter.headerViewHeight = contentSize.height
+        albumListTableViewAdapter.headerView = view
         albumListTableViewAdapter.reloadView()
     }
     
-    public func adSpaceView(adSpaceView: ADSpaceView, didFailWithError error: Error) {
+    public func adSpace(adSpace: ADSpace, didFailWithError error: Error) {
         
     }
-    
+
     private func closeAd() {
         albumListTableViewAdapter.headerViewHeight = 0
         albumListTableViewAdapter.headerView = nil
         albumListTableViewAdapter.reloadView()
+        adSpace = nil
     }
     
     private func createViews() {

@@ -4,14 +4,16 @@ import UIKit
 import ADSense
 
 
-public class TopSongsListViewController: UIViewController, ADSpaceViewDelegate {
+public class TopSongsListViewController: UIViewController, ADSpaceDelegate, ADSpaceFullScreenDelegate {
     
     internal var listViewAdapter: TopSongListViewAdapter!
     internal var listView: TopSongListView!
     internal var countrySelectionButton: UIBarButtonItem!
     var selectedCountry = "USA"
+    var selectedSong: Song?
     
-    var adSpaceView: ADSpaceView!
+    var adSpace: ADSpace!
+    var adSpaceView: UIView?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,31 +24,52 @@ public class TopSongsListViewController: UIViewController, ADSpaceViewDelegate {
         setupListViewAdapter()
         listViewAdapter.loadTopSongs(countryIdentifier: Countries[selectedCountry]!)
         
-        adSpaceView = ADSpaceView(token: "")
-        adSpaceView.delegate = self
-        adSpaceView.load(request: ADSpaceRequest(adType:.Banner) { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.closeAdSpace()
-        })
-
+        adSpace = ADSpace()
+        adSpace.delegate = self
+        adSpace.fullScreenAdDelegate = self
+        adSpace.load(adType: .banner)
     }
     
-    public func adSpaceViewWillLoad(adSpaceView: ADSpaceView) {
+    public func adSpaceWillLoad(adSpace: ADSpace) {
         print("Will load ad")
     }
     
-    public func adSpaceViewDidLoad(adSpaceView: ADSpaceView) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            self.listViewAdapter.headerView = adSpaceView
-            self.listView.setHeaderSize(size: adSpaceView.size)
-            self.listView.reloadData()
-        }
+    public func adSpace(adSpace: ADSpace,
+                        didLoadView view: UIView,
+                        contentSize: CGSize) {
+        self.listViewAdapter.headerView = view
+        self.listView.setHeaderSize(size: contentSize)
+        self.listView.reloadData()
     }
     
-    public func adSpaceView(adSpaceView: ADSpaceView, didFailWithError error: Error) {
-        print("Failed with error \(error)")
+    public func adSpace(adSpace: ADSpace, didFailWithError error: Error) {
+        
     }
     
+    public func adSpace(adSpace: ADSpace, willCloseView view: UIView) {
+        closeAdSpace()
+    }
+    
+    public func fullScreenAdWillLoad(adSpace: ADSpace) {
+        
+    }
+    
+    public func fullScreenAd(adSpace: ADSpace, didFailWithError error: Error) {
+        
+    }
+    
+    public func fullScreenAdDidLoad(adSpace: ADSpace) {
+        ProgressView.hideFrom(view: view.window!)
+    }
+    
+    public func fullScreenAdDidClose(adSpace: ADSpace) {
+        guard let selectedSong = selectedSong else { return }
+        let songDetailViewController = AlbumListViewController(song: selectedSong)
+        navigationController?.pushViewController(songDetailViewController, animated: true)
+
+    }
+
+
     func closeAdSpace() {
         UIView.animate(withDuration: 0.5) {
             self.listViewAdapter.headerView = nil
@@ -106,7 +129,8 @@ extension TopSongsListViewController {
     }
     
     internal func showAlbumDetail(_ song: Song) {
-        let songDetailViewController = AlbumListViewController(song: song)
-        navigationController?.pushViewController(songDetailViewController, animated: true)
+        ProgressView.showIn(view: view.window!)
+        selectedSong = song
+        adSpace.load(adType: .interstitial(in: self))
     }
 }

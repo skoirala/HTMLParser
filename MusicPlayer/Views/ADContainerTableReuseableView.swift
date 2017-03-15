@@ -5,7 +5,7 @@ import UIKit
 public class ADContainerTableReuseableView: UITableViewHeaderFooterView {
     public static let ReuseIdentifier = "ReuseIdentifier"
     
-    var containedView: UIView?
+    weak var containedView: UIView?
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)

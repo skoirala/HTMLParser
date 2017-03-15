@@ -12,6 +12,8 @@
 		2C1418801E6B11670094AA59 /* ADSense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C14187F1E6B11670094AA59 /* ADSense.framework */; };
 		2C1418811E6B11670094AA59 /* ADSense.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C14187F1E6B11670094AA59 /* ADSense.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C1418851E6BA0FD0094AA59 /* ADContainerCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1418841E6BA0FD0094AA59 /* ADContainerCollectionReusableView.swift */; };
+		2C6858F91E79452F00E6D6A4 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6858F81E79452F00E6D6A4 /* ProgressView.swift */; };
+		2C6859161E794F2700E6D6A4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C6859151E794F2700E6D6A4 /* Info.plist */; };
 		2C7E143B1C9CA5CD0020197E /* HTMLElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E14361C9CA5CD0020197E /* HTMLElement.swift */; };
 		2C7E143C1C9CA5CD0020197E /* HTMLElementGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E14371C9CA5CD0020197E /* HTMLElementGenerator.swift */; };
 		2C7E143D1C9CA5CD0020197E /* HTMLElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E14381C9CA5CD0020197E /* HTMLElements.swift */; };
@@ -78,6 +80,8 @@
 		2C14187D1E6A43780094AA59 /* Countries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		2C14187F1E6B11670094AA59 /* ADSense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ADSense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C1418841E6BA0FD0094AA59 /* ADContainerCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADContainerCollectionReusableView.swift; sourceTree = "<group>"; };
+		2C6858F81E79452F00E6D6A4 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		2C6859151E794F2700E6D6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C7E14361C9CA5CD0020197E /* HTMLElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLElement.swift; sourceTree = "<group>"; };
 		2C7E14371C9CA5CD0020197E /* HTMLElementGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLElementGenerator.swift; sourceTree = "<group>"; };
 		2C7E14381C9CA5CD0020197E /* HTMLElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLElements.swift; sourceTree = "<group>"; };
@@ -200,6 +204,7 @@
 		2C7F33F11C9B98520016154B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2C6859151E794F2700E6D6A4 /* Info.plist */,
 				2C7F33F21C9B98520016154B /* Assets.xcassets */,
 				2C7F33F31C9B98520016154B /* LaunchScreen.storyboard */,
 			);
@@ -240,6 +245,7 @@
 				2C7F34071C9B98520016154B /* TopSongListView.swift */,
 				2C1418841E6BA0FD0094AA59 /* ADContainerCollectionReusableView.swift */,
 				2CC4854C1E6D5BD900BB045C /* ADContainerTableReuseableView.swift */,
+				2C6858F81E79452F00E6D6A4 /* ProgressView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -340,7 +346,7 @@
 				TargetAttributes = {
 					2CDF91A01C921CBE0060B95A = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = 55X64MAG7P;
+						DevelopmentTeam = 5H846XCLJ5;
 						DevelopmentTeamName = "Sandeep Koirala";
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
@@ -381,6 +387,7 @@
 			files = (
 				2C7F34191C9B98520016154B /* Assets.xcassets in Resources */,
 				2C7F341A1C9B98520016154B /* LaunchScreen.storyboard in Resources */,
+				2C6859161E794F2700E6D6A4 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +422,7 @@
 				2C7F34251C9B98520016154B /* TopSongsListViewController.swift in Sources */,
 				2C7F340A1C9B98520016154B /* TopSongListViewAdapter.swift in Sources */,
 				2C7F34201C9B98520016154B /* JSONRequest.swift in Sources */,
+				2C6858F91E79452F00E6D6A4 /* ProgressView.swift in Sources */,
 				2C7F34121C9B98520016154B /* Operators.swift in Sources */,
 				2C14187C1E6A43440094AA59 /* CountrySelectionPopupViewController.swift in Sources */,
 				2C7F34211C9B98520016154B /* TopSongsRequest.swift in Sources */,
@@ -484,6 +492,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -512,13 +521,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
-				DEVELOPMENT_TEAM = 55X64MAG7P;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5H846XCLJ5;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = MusicPlayer/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sk.MusicPlayer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sk.com.sk.MusicPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/MusicPlayer-BridgingHeader.h";
 				SWIFT_VERSION = 3.0;
@@ -555,6 +565,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -581,13 +592,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
-				DEVELOPMENT_TEAM = 55X64MAG7P;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5H846XCLJ5;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = MusicPlayer/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sk.MusicPlayer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sk.com.sk.MusicPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/MusicPlayer-BridgingHeader.h";
 				SWIFT_VERSION = 3.0;

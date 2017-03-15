@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../../Desktop/ADSense/ADSense/ADSense.xcodeproj">
+      location = "group:ADSense/ADSense.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:MusicPlayer.xcodeproj">

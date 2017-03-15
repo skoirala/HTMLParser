@@ -4,9 +4,9 @@ import UIKit
 import ADSense
 
 
-public class AlbumListViewController: UIViewController, ADSpaceViewDelegate {
+public class AlbumListViewController: UIViewController, ADSpaceDelegate {
     
-    var adSpaceView: ADSpaceView!
+    var adSpace: ADSpace!
 
     public init(song: Song) {
         self.song = song        
@@ -28,39 +28,37 @@ public class AlbumListViewController: UIViewController, ADSpaceViewDelegate {
         
         listViewAdapter.loadArtistDetail()
         
-        adSpaceView = ADSpaceView(token: "")
-        adSpaceView.load(request: ADSpaceRequest(adType:.Inline) { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.closeAdSpace()
-        })
-            
-        adSpaceView.delegate = self
+        adSpace = ADSpace()
+        adSpace.delegate = self
+        adSpace.load(adType: .banner)
+    }
+    
+    public func adSpaceWillLoad(adSpace: ADSpace) {
         
     }
     
-    public func adSpaceViewWillLoad(adSpaceView: ADSpaceView) {
-        print("Will load ad")
+    public func adSpace(adSpace: ADSpace, didFailWithError error: Error) {
+        
     }
     
-    public func adSpaceViewDidLoad(adSpaceView: ADSpaceView) {
-        let randomTime = Int(arc4random_uniform(4))
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(randomTime)) {
-            self.listViewAdapter.headerView = adSpaceView
-            self.listView.setHeaderSize(size: adSpaceView.size)
-            self.listView.reloadData()
-        }
+    public func adSpace(adSpace: ADSpace, willCloseView view: UIView) {
+        closeAdSpace()
     }
     
+    public func adSpace(adSpace: ADSpace, didLoadView view: UIView, contentSize: CGSize) {
+        self.listViewAdapter.headerView = view
+        self.listView.setHeaderSize(size: contentSize)
+        self.listView.reloadData()
+    }
+    
+
     func closeAdSpace() {
         UIView.animate(withDuration: 0.5) { 
             self.listViewAdapter.headerView = nil
             self.listView.setHeaderSize(size: .zero)
             self.listView.reloadData()
+            self.adSpace = nil
         }
-    }
-    
-    public func adSpaceView(adSpaceView: ADSpaceView, didFailWithError error: Error) {
-        print("Failed with error \(error)")
     }
 
     
